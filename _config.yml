@@ -38,7 +38,7 @@ html_escape:
 
 # Everything below here should be left alone. Modifications may break fastpages
 future: true
-theme: jekyll-gitbook
+theme: minima
 plugins:
   - jekyll-feed
   - jekyll-gist
@@ -57,7 +57,7 @@ plugins:
 paginate: 15
 paginate_path: /page:num/
 
-remote_theme: sighingnow/jekyll-gitbook
+remote_theme: jekyll/minima
 
 titles_from_headings:
   enabled:     true
