@@ -1,0 +1,1624 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>[Colab] 신용카드 사용자 연체 예측 | 블로그는 어려워</title>
+<meta name="generator" content="Jekyll v4.1.1" />
+<meta property="og:title" content="[Colab] 신용카드 사용자 연체 예측" />
+<meta name="author" content="shw9807" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="An easy to use blogging platform with support for Jupyter Notebooks." />
+<meta property="og:description" content="An easy to use blogging platform with support for Jupyter Notebooks." />
+<link rel="canonical" href="https://shw9807.github.io/shw9807blog/%EB%8D%B0%EC%9D%B4%EC%BD%98/2022/02/10/%EC%8B%A0%EC%9A%A9%EC%B9%B4%EB%93%9C_%EC%97%B0%EC%B2%B4%EC%98%88%EC%B8%A1.html" />
+<meta property="og:url" content="https://shw9807.github.io/shw9807blog/%EB%8D%B0%EC%9D%B4%EC%BD%98/2022/02/10/%EC%8B%A0%EC%9A%A9%EC%B9%B4%EB%93%9C_%EC%97%B0%EC%B2%B4%EC%98%88%EC%B8%A1.html" />
+<meta property="og:site_name" content="블로그는 어려워" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2022-02-10T00:00:00-06:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="[Colab] 신용카드 사용자 연체 예측" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"shw9807"},"dateModified":"2022-02-10T00:00:00-06:00","datePublished":"2022-02-10T00:00:00-06:00","description":"An easy to use blogging platform with support for Jupyter Notebooks.","headline":"[Colab] 신용카드 사용자 연체 예측","mainEntityOfPage":{"@type":"WebPage","@id":"https://shw9807.github.io/shw9807blog/%EB%8D%B0%EC%9D%B4%EC%BD%98/2022/02/10/%EC%8B%A0%EC%9A%A9%EC%B9%B4%EB%93%9C_%EC%97%B0%EC%B2%B4%EC%98%88%EC%B8%A1.html"},"url":"https://shw9807.github.io/shw9807blog/%EB%8D%B0%EC%9D%B4%EC%BD%98/2022/02/10/%EC%8B%A0%EC%9A%A9%EC%B9%B4%EB%93%9C_%EC%97%B0%EC%B2%B4%EC%98%88%EC%B8%A1.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/shw9807blog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://shw9807.github.io/shw9807blog/feed.xml" title="블로그는 어려워" /><link rel="shortcut icon" type="image/x-icon" href="/shw9807blog/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/katex.min.css" integrity="sha512-h7nl+xz8wgDlNM4NqKEM4F1NkIRS17M9+uJwIGwuo8vGqIl4BhuCKdxjWEINm+xyrUjNCnK5dCrhM0sj+wTIXw==" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/katex.min.js" integrity="sha512-/CMIhXiDA3m2c9kzRyd97MTb3MC6OVnx4TElQ7fkkoRghwDf6gi41gaT1PwF270W6+J60uTmwgeRpNpJdRV6sg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/contrib/auto-render.min.js" integrity="sha512-Do7uJAaHZm5OLrIv/yN4w0iG1dbu01kzdMNnFfu/mAqgUk6Nniv2JYHcwH+cNwjqgLcqcuBBk+JRvprLVI8azg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha512-0doc9hKxR3PYwso42RD1p5ySZpzzuDiOwMrdCEh2WdJZCjcmFKc/wEnL+z8fBQrnHoiNWbo+3fiGkOYXBdQp4A==" crossorigin="anonymous"></script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement( document.body, {
+        delimiters: [
+            {left: "$$", right: "$$", display: true},
+            {left: "[%", right: "%]", display: true},
+            {left: "$", right: "$", display: false}
+        ]}
+        );
+    });
+    </script>
+
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/shw9807blog/">블로그는 어려워</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/shw9807blog/about/">about</a><a class="page-link" href="/shw9807blog/search/">Search</a><a class="page-link" href="/shw9807blog/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">[Colab] 신용카드 사용자 연체 예측</h1><p class="post-meta post-meta-title"><time class="dt-published" datetime="2022-02-10T00:00:00-06:00" itemprop="datePublished">
+        Feb 10, 2022
+      </time>• 
+          <span itemprop="author" itemscope itemtype="http://schema.org/Person">
+            <span class="p-author h-card" itemprop="name">shw9807</span></span>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      24 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/shw9807blog/categories/#데이콘">데이콘</a>
+        
+      
+      </p>
+    
+
+    
+      
+        <div class="pb-5 d-flex flex-justify-center">
+          <div class="px-2">
+
+    <a href="https://github.com/shw9807/shw9807blog/tree/master/_notebooks/2022-02-10-신용카드_연체예측.ipynb" role="button" target="_blank">
+<img class="notebook-badge-image" src="/shw9807blog/assets/badges/github.svg" alt="View On GitHub">
+    </a>
+</div>
+
+          <div class="px-2">
+    <a href="https://mybinder.org/v2/gh/shw9807/shw9807blog/master?filepath=_notebooks%2F2022-02-10-%EC%8B%A0%EC%9A%A9%EC%B9%B4%EB%93%9C_%EC%97%B0%EC%B2%B4%EC%98%88%EC%B8%A1.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/shw9807blog/assets/badges/binder.svg" alt="Open In Binder"/>
+    </a>
+</div>
+
+          <div class="px-2">
+    <a href="https://colab.research.google.com/github/shw9807/shw9807blog/blob/master/_notebooks/2022-02-10-신용카드_연체예측.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/shw9807blog/assets/badges/colab.svg" alt="Open In Colab"/>
+    </a>
+</div>
+          <div class="px-2">
+  <a href="https://deepnote.com/launch?url=https%3A%2F%2Fgithub.com%2Fshw9807%2Fshw9807blog%2Fblob%2Fmaster%2F_notebooks%2F2022-02-10-%EC%8B%A0%EC%9A%A9%EC%B9%B4%EB%93%9C_%EC%97%B0%EC%B2%B4%EC%98%88%EC%B8%A1.ipynb" target="_blank">
+      <img class="notebook-badge-image" src="/shw9807blog/assets/badges/deepnote.svg" alt="Launch in Deepnote"/>
+  </a>
+</div>
+
+        </div>
+      </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul id="toc" class="section-nav">
+<li class="toc-entry toc-h2"><a href="#LOAD-DATASET">LOAD DATASET </a></li>
+<li class="toc-entry toc-h2"><a href="#MODELS">MODELS </a></li>
+<li class="toc-entry toc-h2"><a href="#CAT-TRAIN">CAT TRAIN </a></li>
+<li class="toc-entry toc-h2"><a href="#LGBM-TRAIN">LGBM TRAIN </a></li>
+<li class="toc-entry toc-h2"><a href="#XGB-TRAIN">XGB TRAIN </a></li>
+<li class="toc-entry toc-h2"><a href="#RANDOM-FOREST-TRAIN">RANDOM FOREST TRAIN </a></li>
+<li class="toc-entry toc-h2"><a href="#배열-합치기">배열 합치기 </a></li>
+<li class="toc-entry toc-h2"><a href="#PYTORCH-TABULAR">PYTORCH TABULAR </a></li>
+</ul><!--
+#################################################
+### THIS FILE WAS AUTOGENERATED! DO NOT EDIT! ###
+#################################################
+# file to edit: _notebooks/2022-02-10-신용카드_연체예측.ipynb
+-->
+
+<div class="container" id="notebook-container">
+        
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><a href="https://colab.research.google.com/github/shw9807/shw9807blog/blob/master/%EC%8B%A0%EC%9A%A9%EC%B9%B4%EB%93%9C_%EC%97%B0%EC%B2%B4%EC%98%88%EC%B8%A1.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"></a></p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="err">!</span><span class="n">pip</span> <span class="n">uninstall</span> <span class="o">-</span><span class="n">y</span> <span class="n">typing</span> <span class="c1"># this should avoid  AttributeError: type object 'Callable' has no attribute '_abc_registry'</span>
+<span class="err">!</span><span class="n">pip</span> <span class="n">install</span>  <span class="s2">"git+https://github.com/dreamquark-ai/tabnet.git@develop#egg=pytorch_tabnet"</span> <span class="o">--</span><span class="n">upgrade</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre><span class="ansi-yellow-fg">WARNING: Skipping typing as it is not installed.</span>
+Collecting pytorch_tabnet
+  Cloning https://github.com/dreamquark-ai/tabnet.git (to revision develop) to /tmp/pip-install-vk88_98j/pytorch-tabnet_c577cf56909f451bb57123369d3b06a6
+  Running command git clone -q https://github.com/dreamquark-ai/tabnet.git /tmp/pip-install-vk88_98j/pytorch-tabnet_c577cf56909f451bb57123369d3b06a6
+  Installing build dependencies ... done
+  Getting requirements to build wheel ... done
+    Preparing wheel metadata ... done
+Requirement already satisfied: numpy&lt;2.0,&gt;=1.17 in /usr/local/lib/python3.7/dist-packages (from pytorch_tabnet) (1.19.5)
+Requirement already satisfied: tqdm&lt;5.0,&gt;=4.36 in /usr/local/lib/python3.7/dist-packages (from pytorch_tabnet) (4.62.3)
+Requirement already satisfied: torch&lt;2.0,&gt;=1.2 in /usr/local/lib/python3.7/dist-packages (from pytorch_tabnet) (1.10.0+cu111)
+Requirement already satisfied: scipy&gt;1.4 in /usr/local/lib/python3.7/dist-packages (from pytorch_tabnet) (1.4.1)
+Requirement already satisfied: scikit_learn&gt;0.21 in /usr/local/lib/python3.7/dist-packages (from pytorch_tabnet) (1.0.2)
+Requirement already satisfied: threadpoolctl&gt;=2.0.0 in /usr/local/lib/python3.7/dist-packages (from scikit_learn&gt;0.21-&gt;pytorch_tabnet) (3.1.0)
+Requirement already satisfied: joblib&gt;=0.11 in /usr/local/lib/python3.7/dist-packages (from scikit_learn&gt;0.21-&gt;pytorch_tabnet) (1.1.0)
+Requirement already satisfied: typing-extensions in /usr/local/lib/python3.7/dist-packages (from torch&lt;2.0,&gt;=1.2-&gt;pytorch_tabnet) (3.10.0.2)
+Building wheels for collected packages: pytorch-tabnet
+  Building wheel for pytorch-tabnet (PEP 517) ... done
+  Created wheel for pytorch-tabnet: filename=pytorch_tabnet-3.1.1-py3-none-any.whl size=40626 sha256=af83d1a6c0e84932cedc83c69a1c85784f8a4b338d964fd21f6b3cb160c9779d
+  Stored in directory: /tmp/pip-ephem-wheel-cache-83a06ce3/wheels/a6/8e/aa/6f5ef6a2e389c8b5f7ea1c74bbb03ece8773b03c2b8955c334
+Successfully built pytorch-tabnet
+Installing collected packages: pytorch-tabnet
+Successfully installed pytorch-tabnet-3.1.1
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>TabNet : 정형 데이터에 적합한 딥러닝 모델</p>
+<blockquote>
+<p>장점은 크게 4가지라고 함</p>
+<ol>
+<li>TabNet은 전처리 과정이 필요하지 않다.</li>
+<li>Decision step을 통해 feature selection을 진행한다.</li>
+<li>위의 과정으로 인해 decision step별이나(local interpretability) 모델 전체의(global interpretability) feature importance를 수치화 할 수 있다.</li>
+<li>무작위로 가려진 feature 값을 예측하는 unsupervised pretrain 단계를 적용하여 상당한 성능 향상을 보여준다.</li>
+</ol>
+</blockquote>
+<p>TabNet에 대한 자세한 설명:<a href="https://themore-dont-know.tistory.com/2">https://themore-dont-know.tistory.com/2</a></p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="err">!</span><span class="n">pip</span> <span class="n">install</span> <span class="n">catboost</span>
+<span class="err">!</span><span class="n">pip</span> <span class="n">install</span> <span class="n">optuna</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Collecting catboost
+  Downloading catboost-1.0.4-cp37-none-manylinux1_x86_64.whl (76.1 MB)
+     |████████████████████████████████| 76.1 MB 1.1 MB/s 
+Requirement already satisfied: graphviz in /usr/local/lib/python3.7/dist-packages (from catboost) (0.10.1)
+Requirement already satisfied: numpy&gt;=1.16.0 in /usr/local/lib/python3.7/dist-packages (from catboost) (1.19.5)
+Requirement already satisfied: six in /usr/local/lib/python3.7/dist-packages (from catboost) (1.15.0)
+Requirement already satisfied: matplotlib in /usr/local/lib/python3.7/dist-packages (from catboost) (3.2.2)
+Requirement already satisfied: plotly in /usr/local/lib/python3.7/dist-packages (from catboost) (5.5.0)
+Requirement already satisfied: pandas&gt;=0.24.0 in /usr/local/lib/python3.7/dist-packages (from catboost) (1.3.5)
+Requirement already satisfied: scipy in /usr/local/lib/python3.7/dist-packages (from catboost) (1.4.1)
+Requirement already satisfied: pytz&gt;=2017.3 in /usr/local/lib/python3.7/dist-packages (from pandas&gt;=0.24.0-&gt;catboost) (2018.9)
+Requirement already satisfied: python-dateutil&gt;=2.7.3 in /usr/local/lib/python3.7/dist-packages (from pandas&gt;=0.24.0-&gt;catboost) (2.8.2)
+Requirement already satisfied: kiwisolver&gt;=1.0.1 in /usr/local/lib/python3.7/dist-packages (from matplotlib-&gt;catboost) (1.3.2)
+Requirement already satisfied: cycler&gt;=0.10 in /usr/local/lib/python3.7/dist-packages (from matplotlib-&gt;catboost) (0.11.0)
+Requirement already satisfied: pyparsing!=2.0.4,!=2.1.2,!=2.1.6,&gt;=2.0.1 in /usr/local/lib/python3.7/dist-packages (from matplotlib-&gt;catboost) (3.0.7)
+Requirement already satisfied: tenacity&gt;=6.2.0 in /usr/local/lib/python3.7/dist-packages (from plotly-&gt;catboost) (8.0.1)
+Installing collected packages: catboost
+Successfully installed catboost-1.0.4
+Collecting optuna
+  Downloading optuna-2.10.0-py3-none-any.whl (308 kB)
+     |████████████████████████████████| 308 kB 7.7 MB/s 
+Requirement already satisfied: PyYAML in /usr/local/lib/python3.7/dist-packages (from optuna) (3.13)
+Collecting alembic
+  Downloading alembic-1.7.6-py3-none-any.whl (210 kB)
+     |████████████████████████████████| 210 kB 51.3 MB/s 
+Requirement already satisfied: tqdm in /usr/local/lib/python3.7/dist-packages (from optuna) (4.62.3)
+Requirement already satisfied: scipy!=1.4.0 in /usr/local/lib/python3.7/dist-packages (from optuna) (1.4.1)
+Requirement already satisfied: sqlalchemy&gt;=1.1.0 in /usr/local/lib/python3.7/dist-packages (from optuna) (1.4.31)
+Requirement already satisfied: packaging&gt;=20.0 in /usr/local/lib/python3.7/dist-packages (from optuna) (21.3)
+Collecting cmaes&gt;=0.8.2
+  Downloading cmaes-0.8.2-py3-none-any.whl (15 kB)
+Collecting colorlog
+  Downloading colorlog-6.6.0-py2.py3-none-any.whl (11 kB)
+Requirement already satisfied: numpy in /usr/local/lib/python3.7/dist-packages (from optuna) (1.19.5)
+Collecting cliff
+  Downloading cliff-3.10.0-py3-none-any.whl (80 kB)
+     |████████████████████████████████| 80 kB 9.5 MB/s 
+Requirement already satisfied: pyparsing!=3.0.5,&gt;=2.0.2 in /usr/local/lib/python3.7/dist-packages (from packaging&gt;=20.0-&gt;optuna) (3.0.7)
+Requirement already satisfied: importlib-metadata in /usr/local/lib/python3.7/dist-packages (from sqlalchemy&gt;=1.1.0-&gt;optuna) (4.10.1)
+Requirement already satisfied: greenlet!=0.4.17 in /usr/local/lib/python3.7/dist-packages (from sqlalchemy&gt;=1.1.0-&gt;optuna) (1.1.2)
+Requirement already satisfied: importlib-resources in /usr/local/lib/python3.7/dist-packages (from alembic-&gt;optuna) (5.4.0)
+Collecting Mako
+  Downloading Mako-1.1.6-py2.py3-none-any.whl (75 kB)
+     |████████████████████████████████| 75 kB 4.7 MB/s 
+Collecting pbr!=2.1.0,&gt;=2.0.0
+  Downloading pbr-5.8.1-py2.py3-none-any.whl (113 kB)
+     |████████████████████████████████| 113 kB 56.1 MB/s 
+Collecting cmd2&gt;=1.0.0
+  Downloading cmd2-2.3.3-py3-none-any.whl (149 kB)
+     |████████████████████████████████| 149 kB 67.7 MB/s 
+Collecting autopage&gt;=0.4.0
+  Downloading autopage-0.5.0-py3-none-any.whl (29 kB)
+Collecting stevedore&gt;=2.0.1
+  Downloading stevedore-3.5.0-py3-none-any.whl (49 kB)
+     |████████████████████████████████| 49 kB 6.1 MB/s 
+Requirement already satisfied: PrettyTable&gt;=0.7.2 in /usr/local/lib/python3.7/dist-packages (from cliff-&gt;optuna) (3.0.0)
+Requirement already satisfied: typing-extensions in /usr/local/lib/python3.7/dist-packages (from cmd2&gt;=1.0.0-&gt;cliff-&gt;optuna) (3.10.0.2)
+Collecting pyperclip&gt;=1.6
+  Downloading pyperclip-1.8.2.tar.gz (20 kB)
+Requirement already satisfied: wcwidth&gt;=0.1.7 in /usr/local/lib/python3.7/dist-packages (from cmd2&gt;=1.0.0-&gt;cliff-&gt;optuna) (0.2.5)
+Requirement already satisfied: attrs&gt;=16.3.0 in /usr/local/lib/python3.7/dist-packages (from cmd2&gt;=1.0.0-&gt;cliff-&gt;optuna) (21.4.0)
+Requirement already satisfied: zipp&gt;=0.5 in /usr/local/lib/python3.7/dist-packages (from importlib-metadata-&gt;sqlalchemy&gt;=1.1.0-&gt;optuna) (3.7.0)
+Requirement already satisfied: MarkupSafe&gt;=0.9.2 in /usr/local/lib/python3.7/dist-packages (from Mako-&gt;alembic-&gt;optuna) (2.0.1)
+Building wheels for collected packages: pyperclip
+  Building wheel for pyperclip (setup.py) ... done
+  Created wheel for pyperclip: filename=pyperclip-1.8.2-py3-none-any.whl size=11137 sha256=155c92cf927017f0697a47c617051424d4c7d9cb9bc502efdc02f27dd7fca2ab
+  Stored in directory: /root/.cache/pip/wheels/9f/18/84/8f69f8b08169c7bae2dde6bd7daf0c19fca8c8e500ee620a28
+Successfully built pyperclip
+Installing collected packages: pyperclip, pbr, stevedore, Mako, cmd2, autopage, colorlog, cmaes, cliff, alembic, optuna
+Successfully installed Mako-1.1.6 alembic-1.7.6 autopage-0.5.0 cliff-3.10.0 cmaes-0.8.2 cmd2-2.3.3 colorlog-6.6.0 optuna-2.10.0 pbr-5.8.1 pyperclip-1.8.2 stevedore-3.5.0
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">List</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">import</span> <span class="nn">catboost</span>
+
+<span class="kn">from</span> <span class="nn">catboost</span> <span class="kn">import</span> <span class="n">CatBoostClassifier</span><span class="p">,</span> <span class="n">Pool</span>
+<span class="kn">from</span> <span class="nn">lightgbm</span> <span class="kn">import</span> <span class="n">LGBMClassifier</span>
+<span class="kn">from</span> <span class="nn">xgboost</span> <span class="kn">import</span> <span class="n">XGBClassifier</span>
+<span class="kn">from</span> <span class="nn">pytorch_tabnet.multitask</span> <span class="kn">import</span> <span class="n">TabNetMultiTaskClassifier</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">log_loss</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">StratifiedKFold</span>
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">LabelEncoder</span>
+<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">RandomForestClassifier</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="LOAD-DATASET">
+<a class="anchor" href="#LOAD-DATASET" aria-hidden="true"><span class="octicon octicon-link"></span></a>LOAD DATASET<a class="anchor-link" href="#LOAD-DATASET"> </a>
+</h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<ul>
+<li>catboost가 이 대회의 핵심 알고리즘이라고 생각하여 categorical한 변수를 만드는게 중요하다고 생각하여 따로 함수를 만듦</li>
+<li>다른 알고리즘들은 categorical한 변수보다 numeric한 변수 처리에 초점을 맞춤</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>index<br>
+gender: 성별</p>
+<p>car: 차량 소유 여부</p>
+<p>reality: 부동산 소유 여부</p>
+<p>child_num: 자녀 수</p>
+<p>income_total: 연간 소득</p>
+<p>income_type: 소득 분류<br>
+['Commercial associate', 'Working', 'State servant', 'Pensioner', 'Student']</p>
+<p>edu_type: 교육 수준<br>
+['Higher education' ,'Secondary / secondary special', 'Incomplete higher', 'Lower secondary', 'Academic degree']</p>
+<p>family_type: 결혼 여부<br>
+['Married', 'Civil marriage', 'Separated', 'Single / not married', 'Widow']</p>
+<p>house_type: 생활 방식<br>
+['Municipal apartment', 'House / apartment', 'With parents', 'Co-op apartment', 'Rented apartment', 'Office apartment']</p>
+<p>DAYS_BIRTH: 출생일<br>
+데이터 수집 당시 (0)부터 역으로 셈, 즉, -1은 데이터 수집일 하루 전에 태어났음을 의미</p>
+<p>DAYS_EMPLOYED: 업무 시작일
+                            데이터 수집 당시 (0)부터 역으로 셈, 즉, -1은 데이터 수집일 하루 전부터 일을 시작함을 의미
+                            양수 값은 고용되지 않은 상태를 의미함</p>
+<p>FLAG_MOBIL: 핸드폰 소유 여부</p>
+<p>work_phone: 업무용 전화 소유 여부</p>
+<p>phone: 전화 소유 여부</p>
+<p>email: 이메일 소유 여부</p>
+<p>occyp_type: 직업 유형</p>
+<p>family_size: 가족 규모</p>
+<p>begin_month: 신용카드 발급 월<br>
+데이터 수집 당시 (0)부터 역으로 셈, 즉, -1은 데이터 수집일 한 달 전에 신용카드를 발급함을 의미</p>
+<p>credit: 사용자의 신용카드 대금 연체를 기준으로 한 신용도<br>
+=&gt; 낮을 수록 높은 신용의 신용카드 사용자를 의미함</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="k">def</span> <span class="nf">category_income</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+    <span class="n">data</span><span class="p">[</span><span class="s2">"income_total"</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">"income_total"</span><span class="p">]</span> <span class="o">/</span> <span class="mi">10000</span>
+    <span class="n">conditions</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">"income_total"</span><span class="p">]</span><span class="o">.</span><span class="n">le</span><span class="p">(</span><span class="mi">18</span><span class="p">)),</span>
+        <span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">"income_total"</span><span class="p">]</span><span class="o">.</span><span class="n">gt</span><span class="p">(</span><span class="mi">18</span><span class="p">)</span> <span class="o">&amp;</span> <span class="n">data</span><span class="p">[</span><span class="s2">"income_total"</span><span class="p">]</span><span class="o">.</span><span class="n">le</span><span class="p">(</span><span class="mi">33</span><span class="p">)),</span>
+        <span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">"income_total"</span><span class="p">]</span><span class="o">.</span><span class="n">gt</span><span class="p">(</span><span class="mi">33</span><span class="p">)</span> <span class="o">&amp;</span> <span class="n">data</span><span class="p">[</span><span class="s2">"income_total"</span><span class="p">]</span><span class="o">.</span><span class="n">le</span><span class="p">(</span><span class="mi">49</span><span class="p">)),</span>
+        <span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">"income_total"</span><span class="p">]</span><span class="o">.</span><span class="n">gt</span><span class="p">(</span><span class="mi">49</span><span class="p">)</span> <span class="o">&amp;</span> <span class="n">data</span><span class="p">[</span><span class="s2">"income_total"</span><span class="p">]</span><span class="o">.</span><span class="n">le</span><span class="p">(</span><span class="mi">64</span><span class="p">)),</span>
+        <span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">"income_total"</span><span class="p">]</span><span class="o">.</span><span class="n">gt</span><span class="p">(</span><span class="mi">64</span><span class="p">)</span> <span class="o">&amp;</span> <span class="n">data</span><span class="p">[</span><span class="s2">"income_total"</span><span class="p">]</span><span class="o">.</span><span class="n">le</span><span class="p">(</span><span class="mi">80</span><span class="p">)),</span>
+        <span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">"income_total"</span><span class="p">]</span><span class="o">.</span><span class="n">gt</span><span class="p">(</span><span class="mi">80</span><span class="p">)</span> <span class="o">&amp;</span> <span class="n">data</span><span class="p">[</span><span class="s2">"income_total"</span><span class="p">]</span><span class="o">.</span><span class="n">le</span><span class="p">(</span><span class="mi">95</span><span class="p">)),</span>
+        <span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">"income_total"</span><span class="p">]</span><span class="o">.</span><span class="n">gt</span><span class="p">(</span><span class="mi">95</span><span class="p">)</span> <span class="o">&amp;</span> <span class="n">data</span><span class="p">[</span><span class="s2">"income_total"</span><span class="p">]</span><span class="o">.</span><span class="n">le</span><span class="p">(</span><span class="mi">111</span><span class="p">)),</span>
+        <span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">"income_total"</span><span class="p">]</span><span class="o">.</span><span class="n">gt</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span> <span class="o">&amp;</span> <span class="n">data</span><span class="p">[</span><span class="s2">"income_total"</span><span class="p">]</span><span class="o">.</span><span class="n">le</span><span class="p">(</span><span class="mi">126</span><span class="p">)),</span>
+        <span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">"income_total"</span><span class="p">]</span><span class="o">.</span><span class="n">gt</span><span class="p">(</span><span class="mi">126</span><span class="p">)</span> <span class="o">&amp;</span> <span class="n">data</span><span class="p">[</span><span class="s2">"income_total"</span><span class="p">]</span><span class="o">.</span><span class="n">le</span><span class="p">(</span><span class="mi">142</span><span class="p">)),</span>
+        <span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">"income_total"</span><span class="p">]</span><span class="o">.</span><span class="n">gt</span><span class="p">(</span><span class="mi">142</span><span class="p">)),</span>
+    <span class="p">]</span>
+    <span class="n">choices</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)]</span>
+
+    <span class="n">data</span><span class="p">[</span><span class="s2">"income_total"</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">conditions</span><span class="p">,</span> <span class="n">choices</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">data</span>
+
+
+<span class="k">def</span> <span class="nf">load_dataset</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">]:</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="s2">"/content/drive/MyDrive/Colab Notebooks/신용카드 연체예측/"</span>
+    <span class="n">train</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">path</span> <span class="o">+</span> <span class="s2">"train.csv"</span><span class="p">)</span>
+    <span class="n">train</span> <span class="o">=</span> <span class="n">train</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s2">"index"</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">train</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="s2">"NAN"</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="n">test</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">path</span> <span class="o">+</span> <span class="s2">"test.csv"</span><span class="p">)</span>
+    <span class="n">test</span> <span class="o">=</span> <span class="n">test</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s2">"index"</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">test</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="s2">"NAN"</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="c1"># absolute</span>
+    <span class="n">train</span><span class="p">[</span><span class="s2">"DAYS_EMPLOYED"</span><span class="p">]</span> <span class="o">=</span> <span class="n">train</span><span class="p">[</span><span class="s2">"DAYS_EMPLOYED"</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="mi">0</span> <span class="k">if</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">x</span><span class="p">)</span>
+    <span class="n">train</span><span class="p">[</span><span class="s2">"DAYS_EMPLOYED"</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">train</span><span class="p">[</span><span class="s2">"DAYS_EMPLOYED"</span><span class="p">])</span>
+    <span class="n">test</span><span class="p">[</span><span class="s2">"DAYS_EMPLOYED"</span><span class="p">]</span> <span class="o">=</span> <span class="n">test</span><span class="p">[</span><span class="s2">"DAYS_EMPLOYED"</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="mi">0</span> <span class="k">if</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">x</span><span class="p">)</span>
+    <span class="n">test</span><span class="p">[</span><span class="s2">"DAYS_EMPLOYED"</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">test</span><span class="p">[</span><span class="s2">"DAYS_EMPLOYED"</span><span class="p">])</span>
+    <span class="n">train</span><span class="p">[</span><span class="s2">"DAYS_BIRTH"</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">train</span><span class="p">[</span><span class="s2">"DAYS_BIRTH"</span><span class="p">])</span>
+    <span class="n">test</span><span class="p">[</span><span class="s2">"DAYS_BIRTH"</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">test</span><span class="p">[</span><span class="s2">"DAYS_BIRTH"</span><span class="p">])</span>
+    <span class="n">train</span><span class="p">[</span><span class="s2">"begin_month"</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">train</span><span class="p">[</span><span class="s2">"begin_month"</span><span class="p">])</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+    <span class="n">test</span><span class="p">[</span><span class="s2">"begin_month"</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">test</span><span class="p">[</span><span class="s2">"begin_month"</span><span class="p">])</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+
+    <span class="c1"># DAYS_BIRTH</span>
+    <span class="n">train</span><span class="p">[</span><span class="s2">"DAYS_BIRTH_month"</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">train</span><span class="p">[</span><span class="s2">"DAYS_BIRTH"</span><span class="p">]</span> <span class="o">/</span> <span class="mi">30</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span>
+        <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">train</span><span class="p">[</span><span class="s2">"DAYS_BIRTH"</span><span class="p">]</span> <span class="o">/</span> <span class="mi">30</span><span class="p">)</span> <span class="o">/</span> <span class="mi">12</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span> <span class="o">*</span> <span class="mi">12</span>
+    <span class="p">)</span>
+    <span class="n">train</span><span class="p">[</span><span class="s2">"DAYS_BIRTH_month"</span><span class="p">]</span> <span class="o">=</span> <span class="n">train</span><span class="p">[</span><span class="s2">"DAYS_BIRTH_month"</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+    <span class="n">train</span><span class="p">[</span><span class="s2">"DAYS_BIRTH_week"</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">train</span><span class="p">[</span><span class="s2">"DAYS_BIRTH"</span><span class="p">]</span> <span class="o">/</span> <span class="mi">7</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span>
+        <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">train</span><span class="p">[</span><span class="s2">"DAYS_BIRTH"</span><span class="p">]</span> <span class="o">/</span> <span class="mi">7</span><span class="p">)</span> <span class="o">/</span> <span class="mi">4</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span> <span class="o">*</span> <span class="mi">4</span>
+    <span class="p">)</span>
+    <span class="n">train</span><span class="p">[</span><span class="s2">"DAYS_BIRTH_week"</span><span class="p">]</span> <span class="o">=</span> <span class="n">train</span><span class="p">[</span><span class="s2">"DAYS_BIRTH_week"</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+    <span class="n">test</span><span class="p">[</span><span class="s2">"DAYS_BIRTH_month"</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">test</span><span class="p">[</span><span class="s2">"DAYS_BIRTH"</span><span class="p">]</span> <span class="o">/</span> <span class="mi">30</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span>
+        <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">test</span><span class="p">[</span><span class="s2">"DAYS_BIRTH"</span><span class="p">]</span> <span class="o">/</span> <span class="mi">30</span><span class="p">)</span> <span class="o">/</span> <span class="mi">12</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span> <span class="o">*</span> <span class="mi">12</span>
+    <span class="p">)</span>
+    <span class="n">test</span><span class="p">[</span><span class="s2">"DAYS_BIRTH_month"</span><span class="p">]</span> <span class="o">=</span> <span class="n">test</span><span class="p">[</span><span class="s2">"DAYS_BIRTH_month"</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+    <span class="n">test</span><span class="p">[</span><span class="s2">"DAYS_BIRTH_week"</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">test</span><span class="p">[</span><span class="s2">"DAYS_BIRTH"</span><span class="p">]</span> <span class="o">/</span> <span class="mi">7</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span>
+        <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">test</span><span class="p">[</span><span class="s2">"DAYS_BIRTH"</span><span class="p">]</span> <span class="o">/</span> <span class="mi">7</span><span class="p">)</span> <span class="o">/</span> <span class="mi">4</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span> <span class="o">*</span> <span class="mi">4</span>
+    <span class="p">)</span>
+    <span class="n">test</span><span class="p">[</span><span class="s2">"DAYS_BIRTH_week"</span><span class="p">]</span> <span class="o">=</span> <span class="n">test</span><span class="p">[</span><span class="s2">"DAYS_BIRTH_week"</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+
+    <span class="c1"># Age</span>
+    <span class="n">train</span><span class="p">[</span><span class="s2">"Age"</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">train</span><span class="p">[</span><span class="s2">"DAYS_BIRTH"</span><span class="p">])</span> <span class="o">//</span> <span class="mi">360</span>
+    <span class="n">test</span><span class="p">[</span><span class="s2">"Age"</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">test</span><span class="p">[</span><span class="s2">"DAYS_BIRTH"</span><span class="p">])</span> <span class="o">//</span> <span class="mi">360</span>
+
+    <span class="c1"># DAYS_EMPLOYED</span>
+    <span class="n">train</span><span class="p">[</span><span class="s2">"DAYS_EMPLOYED_month"</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">train</span><span class="p">[</span><span class="s2">"DAYS_EMPLOYED"</span><span class="p">]</span> <span class="o">/</span> <span class="mi">30</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span>
+        <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">train</span><span class="p">[</span><span class="s2">"DAYS_EMPLOYED"</span><span class="p">]</span> <span class="o">/</span> <span class="mi">30</span><span class="p">)</span> <span class="o">/</span> <span class="mi">12</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span> <span class="o">*</span> <span class="mi">12</span>
+    <span class="p">)</span>
+    <span class="n">train</span><span class="p">[</span><span class="s2">"DAYS_EMPLOYED_month"</span><span class="p">]</span> <span class="o">=</span> <span class="n">train</span><span class="p">[</span><span class="s2">"DAYS_EMPLOYED_month"</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+    <span class="n">train</span><span class="p">[</span><span class="s2">"DAYS_EMPLOYED_week"</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">train</span><span class="p">[</span><span class="s2">"DAYS_EMPLOYED"</span><span class="p">]</span> <span class="o">/</span> <span class="mi">7</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span>
+        <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">train</span><span class="p">[</span><span class="s2">"DAYS_EMPLOYED"</span><span class="p">]</span> <span class="o">/</span> <span class="mi">7</span><span class="p">)</span> <span class="o">/</span> <span class="mi">4</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span> <span class="o">*</span> <span class="mi">4</span>
+    <span class="p">)</span>
+    <span class="n">train</span><span class="p">[</span><span class="s2">"DAYS_EMPLOYED_week"</span><span class="p">]</span> <span class="o">=</span> <span class="n">train</span><span class="p">[</span><span class="s2">"DAYS_EMPLOYED_week"</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+    <span class="n">test</span><span class="p">[</span><span class="s2">"DAYS_EMPLOYED_month"</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">test</span><span class="p">[</span><span class="s2">"DAYS_EMPLOYED"</span><span class="p">]</span> <span class="o">/</span> <span class="mi">30</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span>
+        <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">test</span><span class="p">[</span><span class="s2">"DAYS_EMPLOYED"</span><span class="p">]</span> <span class="o">/</span> <span class="mi">30</span><span class="p">)</span> <span class="o">/</span> <span class="mi">12</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span> <span class="o">*</span> <span class="mi">12</span>
+    <span class="p">)</span>
+    <span class="n">test</span><span class="p">[</span><span class="s2">"DAYS_EMPLOYED_month"</span><span class="p">]</span> <span class="o">=</span> <span class="n">test</span><span class="p">[</span><span class="s2">"DAYS_EMPLOYED_month"</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+    <span class="n">test</span><span class="p">[</span><span class="s2">"DAYS_EMPLOYED_week"</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">test</span><span class="p">[</span><span class="s2">"DAYS_EMPLOYED"</span><span class="p">]</span> <span class="o">/</span> <span class="mi">7</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span>
+        <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">test</span><span class="p">[</span><span class="s2">"DAYS_EMPLOYED"</span><span class="p">]</span> <span class="o">/</span> <span class="mi">7</span><span class="p">)</span> <span class="o">/</span> <span class="mi">4</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span> <span class="o">*</span> <span class="mi">4</span>
+    <span class="p">)</span>
+    <span class="n">test</span><span class="p">[</span><span class="s2">"DAYS_EMPLOYED_week"</span><span class="p">]</span> <span class="o">=</span> <span class="n">test</span><span class="p">[</span><span class="s2">"DAYS_EMPLOYED_week"</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+
+    <span class="c1"># EMPLOYED</span>
+    <span class="n">train</span><span class="p">[</span><span class="s2">"EMPLOYED"</span><span class="p">]</span> <span class="o">=</span> <span class="n">train</span><span class="p">[</span><span class="s2">"DAYS_EMPLOYED"</span><span class="p">]</span> <span class="o">/</span> <span class="mi">360</span>
+    <span class="n">test</span><span class="p">[</span><span class="s2">"EMPLOYED"</span><span class="p">]</span> <span class="o">=</span> <span class="n">test</span><span class="p">[</span><span class="s2">"DAYS_EMPLOYED"</span><span class="p">]</span> <span class="o">/</span> <span class="mi">360</span>
+
+    <span class="c1"># before_EMPLOYED</span>
+    <span class="n">train</span><span class="p">[</span><span class="s2">"before_EMPLOYED"</span><span class="p">]</span> <span class="o">=</span> <span class="n">train</span><span class="p">[</span><span class="s2">"DAYS_BIRTH"</span><span class="p">]</span> <span class="o">-</span> <span class="n">train</span><span class="p">[</span><span class="s2">"DAYS_EMPLOYED"</span><span class="p">]</span>
+    <span class="n">train</span><span class="p">[</span><span class="s2">"before_EMPLOYED_month"</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">train</span><span class="p">[</span><span class="s2">"before_EMPLOYED"</span><span class="p">]</span> <span class="o">/</span> <span class="mi">30</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span>
+        <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">train</span><span class="p">[</span><span class="s2">"before_EMPLOYED"</span><span class="p">]</span> <span class="o">/</span> <span class="mi">30</span><span class="p">)</span> <span class="o">/</span> <span class="mi">12</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span> <span class="o">*</span> <span class="mi">12</span>
+    <span class="p">)</span>
+    <span class="n">train</span><span class="p">[</span><span class="s2">"before_EMPLOYED_month"</span><span class="p">]</span> <span class="o">=</span> <span class="n">train</span><span class="p">[</span><span class="s2">"before_EMPLOYED_month"</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+    <span class="n">train</span><span class="p">[</span><span class="s2">"before_EMPLOYED_week"</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">train</span><span class="p">[</span><span class="s2">"before_EMPLOYED"</span><span class="p">]</span> <span class="o">/</span> <span class="mi">7</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span>
+        <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">train</span><span class="p">[</span><span class="s2">"before_EMPLOYED"</span><span class="p">]</span> <span class="o">/</span> <span class="mi">7</span><span class="p">)</span> <span class="o">/</span> <span class="mi">4</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span> <span class="o">*</span> <span class="mi">4</span>
+    <span class="p">)</span>
+    <span class="n">train</span><span class="p">[</span><span class="s2">"before_EMPLOYED_week"</span><span class="p">]</span> <span class="o">=</span> <span class="n">train</span><span class="p">[</span><span class="s2">"before_EMPLOYED_week"</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+    <span class="n">test</span><span class="p">[</span><span class="s2">"before_EMPLOYED"</span><span class="p">]</span> <span class="o">=</span> <span class="n">test</span><span class="p">[</span><span class="s2">"DAYS_BIRTH"</span><span class="p">]</span> <span class="o">-</span> <span class="n">test</span><span class="p">[</span><span class="s2">"DAYS_EMPLOYED"</span><span class="p">]</span>
+    <span class="n">test</span><span class="p">[</span><span class="s2">"before_EMPLOYED_month"</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">test</span><span class="p">[</span><span class="s2">"before_EMPLOYED"</span><span class="p">]</span> <span class="o">/</span> <span class="mi">30</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span>
+        <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">test</span><span class="p">[</span><span class="s2">"before_EMPLOYED"</span><span class="p">]</span> <span class="o">/</span> <span class="mi">30</span><span class="p">)</span> <span class="o">/</span> <span class="mi">12</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span> <span class="o">*</span> <span class="mi">12</span>
+    <span class="p">)</span>
+    <span class="n">test</span><span class="p">[</span><span class="s2">"before_EMPLOYED_month"</span><span class="p">]</span> <span class="o">=</span> <span class="n">test</span><span class="p">[</span><span class="s2">"before_EMPLOYED_month"</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+    <span class="n">test</span><span class="p">[</span><span class="s2">"before_EMPLOYED_week"</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">test</span><span class="p">[</span><span class="s2">"before_EMPLOYED"</span><span class="p">]</span> <span class="o">/</span> <span class="mi">7</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span>
+        <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">test</span><span class="p">[</span><span class="s2">"before_EMPLOYED"</span><span class="p">]</span> <span class="o">/</span> <span class="mi">7</span><span class="p">)</span> <span class="o">/</span> <span class="mi">4</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span> <span class="o">*</span> <span class="mi">4</span>
+    <span class="p">)</span>
+    <span class="n">test</span><span class="p">[</span><span class="s2">"before_EMPLOYED_week"</span><span class="p">]</span> <span class="o">=</span> <span class="n">test</span><span class="p">[</span><span class="s2">"before_EMPLOYED_week"</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+
+    <span class="c1"># gender_car_reality</span>
+    <span class="n">train</span><span class="p">[</span><span class="s2">"user_code"</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">train</span><span class="p">[</span><span class="s2">"gender"</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
+        <span class="o">+</span> <span class="s2">"_"</span>
+        <span class="o">+</span> <span class="n">train</span><span class="p">[</span><span class="s2">"car"</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
+        <span class="o">+</span> <span class="s2">"_"</span>
+        <span class="o">+</span> <span class="n">train</span><span class="p">[</span><span class="s2">"reality"</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
+    <span class="p">)</span>
+    <span class="n">test</span><span class="p">[</span><span class="s2">"user_code"</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">test</span><span class="p">[</span><span class="s2">"gender"</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
+        <span class="o">+</span> <span class="s2">"_"</span>
+        <span class="o">+</span> <span class="n">test</span><span class="p">[</span><span class="s2">"car"</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
+        <span class="o">+</span> <span class="s2">"_"</span>
+        <span class="o">+</span> <span class="n">test</span><span class="p">[</span><span class="s2">"reality"</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
+    <span class="p">)</span>
+
+    <span class="n">del_cols</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s2">"gender"</span><span class="p">,</span>
+        <span class="s2">"car"</span><span class="p">,</span>
+        <span class="s2">"reality"</span><span class="p">,</span>
+        <span class="s2">"email"</span><span class="p">,</span>
+        <span class="s2">"child_num"</span><span class="p">,</span>
+        <span class="s2">"DAYS_BIRTH"</span><span class="p">,</span>
+        <span class="s2">"DAYS_EMPLOYED"</span><span class="p">,</span>
+    <span class="p">]</span>
+    <span class="n">train</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">train</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">train</span><span class="p">[</span><span class="s2">"family_size"</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">7</span><span class="p">,</span> <span class="s2">"family_size"</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">train</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">del_cols</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">test</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">del_cols</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="n">cat_cols</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s2">"income_type"</span><span class="p">,</span>
+        <span class="s2">"edu_type"</span><span class="p">,</span>
+        <span class="s2">"family_type"</span><span class="p">,</span>
+        <span class="s2">"house_type"</span><span class="p">,</span>
+        <span class="s2">"occyp_type"</span><span class="p">,</span>
+        <span class="s2">"user_code"</span><span class="p">,</span>
+    <span class="p">]</span>
+
+    <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">cat_cols</span><span class="p">:</span>
+        <span class="n">label_encoder</span> <span class="o">=</span> <span class="n">LabelEncoder</span><span class="p">()</span>
+        <span class="n">label_encoder</span> <span class="o">=</span> <span class="n">label_encoder</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">train</span><span class="p">[</span><span class="n">col</span><span class="p">])</span>
+        <span class="n">train</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">label_encoder</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">train</span><span class="p">[</span><span class="n">col</span><span class="p">])</span>
+        <span class="n">test</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">label_encoder</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">test</span><span class="p">[</span><span class="n">col</span><span class="p">])</span>
+
+    <span class="k">return</span> <span class="n">train</span><span class="p">,</span> <span class="n">test</span>
+
+
+<span class="k">def</span> <span class="nf">cat_load_dataset</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">]:</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="s2">"/content/drive/MyDrive/Colab Notebooks/신용카드 연체예측/"</span>
+    <span class="n">train</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">path</span> <span class="o">+</span> <span class="s2">"train.csv"</span><span class="p">)</span>
+    <span class="n">train</span> <span class="o">=</span> <span class="n">train</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s2">"index"</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">train</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="s2">"NAN"</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="n">test</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">path</span> <span class="o">+</span> <span class="s2">"test.csv"</span><span class="p">)</span>
+    <span class="n">test</span> <span class="o">=</span> <span class="n">test</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s2">"index"</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">test</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="s2">"NAN"</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="c1"># absolute</span>
+    <span class="n">train</span><span class="p">[</span><span class="s2">"DAYS_EMPLOYED"</span><span class="p">]</span> <span class="o">=</span> <span class="n">train</span><span class="p">[</span><span class="s2">"DAYS_EMPLOYED"</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="mi">0</span> <span class="k">if</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">x</span><span class="p">)</span>
+    <span class="n">train</span><span class="p">[</span><span class="s2">"DAYS_EMPLOYED"</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">train</span><span class="p">[</span><span class="s2">"DAYS_EMPLOYED"</span><span class="p">])</span>
+    <span class="n">test</span><span class="p">[</span><span class="s2">"DAYS_EMPLOYED"</span><span class="p">]</span> <span class="o">=</span> <span class="n">test</span><span class="p">[</span><span class="s2">"DAYS_EMPLOYED"</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="mi">0</span> <span class="k">if</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">x</span><span class="p">)</span>
+    <span class="n">test</span><span class="p">[</span><span class="s2">"DAYS_EMPLOYED"</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">test</span><span class="p">[</span><span class="s2">"DAYS_EMPLOYED"</span><span class="p">])</span>
+    <span class="n">train</span><span class="p">[</span><span class="s2">"DAYS_BIRTH"</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">train</span><span class="p">[</span><span class="s2">"DAYS_BIRTH"</span><span class="p">])</span>
+    <span class="n">test</span><span class="p">[</span><span class="s2">"DAYS_BIRTH"</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">test</span><span class="p">[</span><span class="s2">"DAYS_BIRTH"</span><span class="p">])</span>
+    <span class="n">train</span><span class="p">[</span><span class="s2">"begin_month"</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">train</span><span class="p">[</span><span class="s2">"begin_month"</span><span class="p">])</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+    <span class="n">test</span><span class="p">[</span><span class="s2">"begin_month"</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">test</span><span class="p">[</span><span class="s2">"begin_month"</span><span class="p">])</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+
+    <span class="c1"># income_total</span>
+    <span class="n">train</span> <span class="o">=</span> <span class="n">category_income</span><span class="p">(</span><span class="n">train</span><span class="p">)</span>
+    <span class="n">test</span> <span class="o">=</span> <span class="n">category_income</span><span class="p">(</span><span class="n">test</span><span class="p">)</span>
+
+    <span class="c1"># DAYS_BIRTH</span>
+    <span class="n">train</span><span class="p">[</span><span class="s2">"DAYS_BIRTH_month"</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">train</span><span class="p">[</span><span class="s2">"DAYS_BIRTH"</span><span class="p">]</span> <span class="o">/</span> <span class="mi">30</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span>
+        <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">train</span><span class="p">[</span><span class="s2">"DAYS_BIRTH"</span><span class="p">]</span> <span class="o">/</span> <span class="mi">30</span><span class="p">)</span> <span class="o">/</span> <span class="mi">12</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span> <span class="o">*</span> <span class="mi">12</span>
+    <span class="p">)</span>
+    <span class="n">train</span><span class="p">[</span><span class="s2">"DAYS_BIRTH_month"</span><span class="p">]</span> <span class="o">=</span> <span class="n">train</span><span class="p">[</span><span class="s2">"DAYS_BIRTH_month"</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+    <span class="n">train</span><span class="p">[</span><span class="s2">"DAYS_BIRTH_week"</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">train</span><span class="p">[</span><span class="s2">"DAYS_BIRTH"</span><span class="p">]</span> <span class="o">/</span> <span class="mi">7</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span>
+        <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">train</span><span class="p">[</span><span class="s2">"DAYS_BIRTH"</span><span class="p">]</span> <span class="o">/</span> <span class="mi">7</span><span class="p">)</span> <span class="o">/</span> <span class="mi">4</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span> <span class="o">*</span> <span class="mi">4</span>
+    <span class="p">)</span>
+    <span class="n">train</span><span class="p">[</span><span class="s2">"DAYS_BIRTH_week"</span><span class="p">]</span> <span class="o">=</span> <span class="n">train</span><span class="p">[</span><span class="s2">"DAYS_BIRTH_week"</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+    <span class="n">test</span><span class="p">[</span><span class="s2">"DAYS_BIRTH_month"</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">test</span><span class="p">[</span><span class="s2">"DAYS_BIRTH"</span><span class="p">]</span> <span class="o">/</span> <span class="mi">30</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span>
+        <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">test</span><span class="p">[</span><span class="s2">"DAYS_BIRTH"</span><span class="p">]</span> <span class="o">/</span> <span class="mi">30</span><span class="p">)</span> <span class="o">/</span> <span class="mi">12</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span> <span class="o">*</span> <span class="mi">12</span>
+    <span class="p">)</span>
+    <span class="n">test</span><span class="p">[</span><span class="s2">"DAYS_BIRTH_month"</span><span class="p">]</span> <span class="o">=</span> <span class="n">test</span><span class="p">[</span><span class="s2">"DAYS_BIRTH_month"</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+    <span class="n">test</span><span class="p">[</span><span class="s2">"DAYS_BIRTH_week"</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">test</span><span class="p">[</span><span class="s2">"DAYS_BIRTH"</span><span class="p">]</span> <span class="o">/</span> <span class="mi">7</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span>
+        <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">test</span><span class="p">[</span><span class="s2">"DAYS_BIRTH"</span><span class="p">]</span> <span class="o">/</span> <span class="mi">7</span><span class="p">)</span> <span class="o">/</span> <span class="mi">4</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span> <span class="o">*</span> <span class="mi">4</span>
+    <span class="p">)</span>
+    <span class="n">test</span><span class="p">[</span><span class="s2">"DAYS_BIRTH_week"</span><span class="p">]</span> <span class="o">=</span> <span class="n">test</span><span class="p">[</span><span class="s2">"DAYS_BIRTH_week"</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+
+    <span class="c1"># Age</span>
+    <span class="n">train</span><span class="p">[</span><span class="s2">"Age"</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">train</span><span class="p">[</span><span class="s2">"DAYS_BIRTH"</span><span class="p">])</span> <span class="o">//</span> <span class="mi">360</span>
+    <span class="n">test</span><span class="p">[</span><span class="s2">"Age"</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">test</span><span class="p">[</span><span class="s2">"DAYS_BIRTH"</span><span class="p">])</span> <span class="o">//</span> <span class="mi">360</span>
+
+    <span class="c1"># DAYS_EMPLOYED</span>
+    <span class="n">train</span><span class="p">[</span><span class="s2">"DAYS_EMPLOYED_month"</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">train</span><span class="p">[</span><span class="s2">"DAYS_EMPLOYED"</span><span class="p">]</span> <span class="o">/</span> <span class="mi">30</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span>
+        <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">train</span><span class="p">[</span><span class="s2">"DAYS_EMPLOYED"</span><span class="p">]</span> <span class="o">/</span> <span class="mi">30</span><span class="p">)</span> <span class="o">/</span> <span class="mi">12</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span> <span class="o">*</span> <span class="mi">12</span>
+    <span class="p">)</span>
+    <span class="n">train</span><span class="p">[</span><span class="s2">"DAYS_EMPLOYED_month"</span><span class="p">]</span> <span class="o">=</span> <span class="n">train</span><span class="p">[</span><span class="s2">"DAYS_EMPLOYED_month"</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+    <span class="n">train</span><span class="p">[</span><span class="s2">"DAYS_EMPLOYED_week"</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">train</span><span class="p">[</span><span class="s2">"DAYS_EMPLOYED"</span><span class="p">]</span> <span class="o">/</span> <span class="mi">7</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span>
+        <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">train</span><span class="p">[</span><span class="s2">"DAYS_EMPLOYED"</span><span class="p">]</span> <span class="o">/</span> <span class="mi">7</span><span class="p">)</span> <span class="o">/</span> <span class="mi">4</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span> <span class="o">*</span> <span class="mi">4</span>
+    <span class="p">)</span>
+    <span class="n">train</span><span class="p">[</span><span class="s2">"DAYS_EMPLOYED_week"</span><span class="p">]</span> <span class="o">=</span> <span class="n">train</span><span class="p">[</span><span class="s2">"DAYS_EMPLOYED_week"</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+    <span class="n">test</span><span class="p">[</span><span class="s2">"DAYS_EMPLOYED_month"</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">test</span><span class="p">[</span><span class="s2">"DAYS_EMPLOYED"</span><span class="p">]</span> <span class="o">/</span> <span class="mi">30</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span>
+        <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">test</span><span class="p">[</span><span class="s2">"DAYS_EMPLOYED"</span><span class="p">]</span> <span class="o">/</span> <span class="mi">30</span><span class="p">)</span> <span class="o">/</span> <span class="mi">12</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span> <span class="o">*</span> <span class="mi">12</span>
+    <span class="p">)</span>
+    <span class="n">test</span><span class="p">[</span><span class="s2">"DAYS_EMPLOYED_month"</span><span class="p">]</span> <span class="o">=</span> <span class="n">test</span><span class="p">[</span><span class="s2">"DAYS_EMPLOYED_month"</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+    <span class="n">test</span><span class="p">[</span><span class="s2">"DAYS_EMPLOYED_week"</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">test</span><span class="p">[</span><span class="s2">"DAYS_EMPLOYED"</span><span class="p">]</span> <span class="o">/</span> <span class="mi">7</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span>
+        <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">test</span><span class="p">[</span><span class="s2">"DAYS_EMPLOYED"</span><span class="p">]</span> <span class="o">/</span> <span class="mi">7</span><span class="p">)</span> <span class="o">/</span> <span class="mi">4</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span> <span class="o">*</span> <span class="mi">4</span>
+    <span class="p">)</span>
+    <span class="n">test</span><span class="p">[</span><span class="s2">"DAYS_EMPLOYED_week"</span><span class="p">]</span> <span class="o">=</span> <span class="n">test</span><span class="p">[</span><span class="s2">"DAYS_EMPLOYED_week"</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+
+    <span class="c1"># EMPLOYED</span>
+    <span class="n">train</span><span class="p">[</span><span class="s2">"EMPLOYED"</span><span class="p">]</span> <span class="o">=</span> <span class="n">train</span><span class="p">[</span><span class="s2">"DAYS_EMPLOYED"</span><span class="p">]</span> <span class="o">/</span> <span class="mi">360</span>
+    <span class="n">test</span><span class="p">[</span><span class="s2">"EMPLOYED"</span><span class="p">]</span> <span class="o">=</span> <span class="n">test</span><span class="p">[</span><span class="s2">"DAYS_EMPLOYED"</span><span class="p">]</span> <span class="o">/</span> <span class="mi">360</span>
+
+    <span class="c1"># before_EMPLOYED</span>
+    <span class="n">train</span><span class="p">[</span><span class="s2">"before_EMPLOYED"</span><span class="p">]</span> <span class="o">=</span> <span class="n">train</span><span class="p">[</span><span class="s2">"DAYS_BIRTH"</span><span class="p">]</span> <span class="o">-</span> <span class="n">train</span><span class="p">[</span><span class="s2">"DAYS_EMPLOYED"</span><span class="p">]</span>
+    <span class="n">train</span><span class="p">[</span><span class="s2">"before_EMPLOYED_month"</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">train</span><span class="p">[</span><span class="s2">"before_EMPLOYED"</span><span class="p">]</span> <span class="o">/</span> <span class="mi">30</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span>
+        <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">train</span><span class="p">[</span><span class="s2">"before_EMPLOYED"</span><span class="p">]</span> <span class="o">/</span> <span class="mi">30</span><span class="p">)</span> <span class="o">/</span> <span class="mi">12</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span> <span class="o">*</span> <span class="mi">12</span>
+    <span class="p">)</span>
+    <span class="n">train</span><span class="p">[</span><span class="s2">"before_EMPLOYED_month"</span><span class="p">]</span> <span class="o">=</span> <span class="n">train</span><span class="p">[</span><span class="s2">"before_EMPLOYED_month"</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+    <span class="n">train</span><span class="p">[</span><span class="s2">"before_EMPLOYED_week"</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">train</span><span class="p">[</span><span class="s2">"before_EMPLOYED"</span><span class="p">]</span> <span class="o">/</span> <span class="mi">7</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span>
+        <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">train</span><span class="p">[</span><span class="s2">"before_EMPLOYED"</span><span class="p">]</span> <span class="o">/</span> <span class="mi">7</span><span class="p">)</span> <span class="o">/</span> <span class="mi">4</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span> <span class="o">*</span> <span class="mi">4</span>
+    <span class="p">)</span>
+    <span class="n">train</span><span class="p">[</span><span class="s2">"before_EMPLOYED_week"</span><span class="p">]</span> <span class="o">=</span> <span class="n">train</span><span class="p">[</span><span class="s2">"before_EMPLOYED_week"</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+    <span class="n">test</span><span class="p">[</span><span class="s2">"before_EMPLOYED"</span><span class="p">]</span> <span class="o">=</span> <span class="n">test</span><span class="p">[</span><span class="s2">"DAYS_BIRTH"</span><span class="p">]</span> <span class="o">-</span> <span class="n">test</span><span class="p">[</span><span class="s2">"DAYS_EMPLOYED"</span><span class="p">]</span>
+    <span class="n">test</span><span class="p">[</span><span class="s2">"before_EMPLOYED_month"</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">test</span><span class="p">[</span><span class="s2">"before_EMPLOYED"</span><span class="p">]</span> <span class="o">/</span> <span class="mi">30</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span>
+        <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">test</span><span class="p">[</span><span class="s2">"before_EMPLOYED"</span><span class="p">]</span> <span class="o">/</span> <span class="mi">30</span><span class="p">)</span> <span class="o">/</span> <span class="mi">12</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span> <span class="o">*</span> <span class="mi">12</span>
+    <span class="p">)</span>
+    <span class="n">test</span><span class="p">[</span><span class="s2">"before_EMPLOYED_month"</span><span class="p">]</span> <span class="o">=</span> <span class="n">test</span><span class="p">[</span><span class="s2">"before_EMPLOYED_month"</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+    <span class="n">test</span><span class="p">[</span><span class="s2">"before_EMPLOYED_week"</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">test</span><span class="p">[</span><span class="s2">"before_EMPLOYED"</span><span class="p">]</span> <span class="o">/</span> <span class="mi">7</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span>
+        <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">test</span><span class="p">[</span><span class="s2">"before_EMPLOYED"</span><span class="p">]</span> <span class="o">/</span> <span class="mi">7</span><span class="p">)</span> <span class="o">/</span> <span class="mi">4</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span> <span class="o">*</span> <span class="mi">4</span>
+    <span class="p">)</span>
+    <span class="n">test</span><span class="p">[</span><span class="s2">"before_EMPLOYED_week"</span><span class="p">]</span> <span class="o">=</span> <span class="n">test</span><span class="p">[</span><span class="s2">"before_EMPLOYED_week"</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+
+    <span class="c1"># gender_car_reality</span>
+    <span class="n">train</span><span class="p">[</span><span class="s2">"user_code"</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">train</span><span class="p">[</span><span class="s2">"gender"</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
+        <span class="o">+</span> <span class="s2">"_"</span>
+        <span class="o">+</span> <span class="n">train</span><span class="p">[</span><span class="s2">"car"</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
+        <span class="o">+</span> <span class="s2">"_"</span>
+        <span class="o">+</span> <span class="n">train</span><span class="p">[</span><span class="s2">"reality"</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
+    <span class="p">)</span>
+    <span class="n">test</span><span class="p">[</span><span class="s2">"user_code"</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">test</span><span class="p">[</span><span class="s2">"gender"</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
+        <span class="o">+</span> <span class="s2">"_"</span>
+        <span class="o">+</span> <span class="n">test</span><span class="p">[</span><span class="s2">"car"</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
+        <span class="o">+</span> <span class="s2">"_"</span>
+        <span class="o">+</span> <span class="n">test</span><span class="p">[</span><span class="s2">"reality"</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
+    <span class="p">)</span>
+
+    <span class="n">del_cols</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s2">"gender"</span><span class="p">,</span>
+        <span class="s2">"car"</span><span class="p">,</span>
+        <span class="s2">"reality"</span><span class="p">,</span>
+        <span class="s2">"email"</span><span class="p">,</span>
+        <span class="s2">"child_num"</span><span class="p">,</span>
+        <span class="s2">"DAYS_BIRTH"</span><span class="p">,</span>
+        <span class="s2">"DAYS_EMPLOYED"</span><span class="p">,</span>
+    <span class="p">]</span>
+    <span class="n">train</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">train</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">train</span><span class="p">[</span><span class="s2">"family_size"</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">7</span><span class="p">,</span> <span class="s2">"family_size"</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">train</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">del_cols</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">test</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">del_cols</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="n">cat_cols</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s2">"income_type"</span><span class="p">,</span>
+        <span class="s2">"edu_type"</span><span class="p">,</span>
+        <span class="s2">"family_type"</span><span class="p">,</span>
+        <span class="s2">"house_type"</span><span class="p">,</span>
+        <span class="s2">"occyp_type"</span><span class="p">,</span>
+        <span class="s2">"user_code"</span><span class="p">,</span>
+    <span class="p">]</span>
+
+    <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">cat_cols</span><span class="p">:</span>
+        <span class="n">label_encoder</span> <span class="o">=</span> <span class="n">LabelEncoder</span><span class="p">()</span>
+        <span class="n">label_encoder</span> <span class="o">=</span> <span class="n">label_encoder</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">train</span><span class="p">[</span><span class="n">col</span><span class="p">])</span>
+        <span class="n">train</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">label_encoder</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">train</span><span class="p">[</span><span class="n">col</span><span class="p">])</span>
+        <span class="n">test</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">label_encoder</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">test</span><span class="p">[</span><span class="n">col</span><span class="p">])</span>
+
+    <span class="k">return</span> <span class="n">train</span><span class="p">,</span> <span class="n">test</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="MODELS">
+<a class="anchor" href="#MODELS" aria-hidden="true"><span class="octicon octicon-link"></span></a>MODELS<a class="anchor-link" href="#MODELS"> </a>
+</h2>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="k">def</span> <span class="nf">stratified_kfold_cat</span><span class="p">(</span>
+    <span class="n">params</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]],</span>
+    <span class="n">n_fold</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">X</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+    <span class="n">y</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+    <span class="n">X_test</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]:</span>
+    <span class="n">folds</span> <span class="o">=</span> <span class="n">StratifiedKFold</span><span class="p">(</span><span class="n">n_splits</span><span class="o">=</span><span class="n">n_fold</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+    <span class="n">splits</span> <span class="o">=</span> <span class="n">folds</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+    <span class="n">cat_oof</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">3</span><span class="p">))</span>
+    <span class="n">cat_preds</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">X_test</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">3</span><span class="p">))</span>
+    <span class="n">cat_cols</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">X</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="n">X</span><span class="p">[</span><span class="n">c</span><span class="p">]</span><span class="o">.</span><span class="n">dtypes</span> <span class="o">==</span> <span class="s2">"int64"</span><span class="p">]</span>
+
+    <span class="k">for</span> <span class="n">fold</span><span class="p">,</span> <span class="p">(</span><span class="n">train_idx</span><span class="p">,</span> <span class="n">valid_idx</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">splits</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"============ Fold </span><span class="si">{</span><span class="n">fold</span><span class="si">}</span><span class="s2"> ============</span><span class="se">\n</span><span class="s2">"</span><span class="p">)</span>
+        <span class="n">X_train</span><span class="p">,</span> <span class="n">X_valid</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">train_idx</span><span class="p">],</span> <span class="n">X</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">valid_idx</span><span class="p">]</span>
+        <span class="n">y_train</span><span class="p">,</span> <span class="n">y_valid</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">train_idx</span><span class="p">],</span> <span class="n">y</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">valid_idx</span><span class="p">]</span>
+        <span class="n">train_data</span> <span class="o">=</span> <span class="n">Pool</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">X_train</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">y_train</span><span class="p">,</span> <span class="n">cat_features</span><span class="o">=</span><span class="n">cat_cols</span><span class="p">)</span>
+        <span class="n">valid_data</span> <span class="o">=</span> <span class="n">Pool</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">X_valid</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">y_valid</span><span class="p">,</span> <span class="n">cat_features</span><span class="o">=</span><span class="n">cat_cols</span><span class="p">)</span>
+
+        <span class="n">model</span> <span class="o">=</span> <span class="n">CatBoostClassifier</span><span class="p">(</span><span class="o">**</span><span class="n">params</span><span class="p">)</span>
+
+        <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span>
+            <span class="n">train_data</span><span class="p">,</span>
+            <span class="n">eval_set</span><span class="o">=</span><span class="n">valid_data</span><span class="p">,</span>
+            <span class="n">early_stopping_rounds</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+            <span class="n">use_best_model</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">verbose</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="n">cat_oof</span><span class="p">[</span><span class="n">valid_idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">X_valid</span><span class="p">)</span>
+        <span class="n">cat_preds</span> <span class="o">+=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span> <span class="o">/</span> <span class="n">n_fold</span>
+
+    <span class="n">log_score</span> <span class="o">=</span> <span class="n">log_loss</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">cat_oof</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Log Loss Score: </span><span class="si">{</span><span class="n">log_score</span><span class="si">:</span><span class="s2">.5f</span><span class="si">}</span><span class="se">\n</span><span class="s2">"</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">cat_oof</span><span class="p">,</span> <span class="n">cat_preds</span>
+
+
+<span class="c1"># Light GBM</span>
+<span class="k">def</span> <span class="nf">stratified_kfold_lgbm</span><span class="p">(</span>
+    <span class="n">params</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">str</span><span class="p">]],</span>
+    <span class="n">n_fold</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">X</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+    <span class="n">y</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+    <span class="n">X_test</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]:</span>
+    <span class="n">folds</span> <span class="o">=</span> <span class="n">StratifiedKFold</span><span class="p">(</span><span class="n">n_splits</span><span class="o">=</span><span class="n">n_fold</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+    <span class="n">splits</span> <span class="o">=</span> <span class="n">folds</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+    <span class="n">lgb_oof</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">3</span><span class="p">))</span>
+    <span class="n">lgb_preds</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">X_test</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">3</span><span class="p">))</span>
+
+    <span class="k">for</span> <span class="n">fold</span><span class="p">,</span> <span class="p">(</span><span class="n">train_idx</span><span class="p">,</span> <span class="n">valid_idx</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">splits</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"============ Fold </span><span class="si">{</span><span class="n">fold</span><span class="si">}</span><span class="s2"> ============</span><span class="se">\n</span><span class="s2">"</span><span class="p">)</span>
+        <span class="n">X_train</span><span class="p">,</span> <span class="n">X_valid</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">train_idx</span><span class="p">],</span> <span class="n">X</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">valid_idx</span><span class="p">]</span>
+        <span class="n">y_train</span><span class="p">,</span> <span class="n">y_valid</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">train_idx</span><span class="p">],</span> <span class="n">y</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">valid_idx</span><span class="p">]</span>
+        <span class="n">pre_model</span> <span class="o">=</span> <span class="n">LGBMClassifier</span><span class="p">(</span><span class="o">**</span><span class="n">params</span><span class="p">)</span>
+
+        <span class="n">pre_model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span>
+            <span class="n">X_train</span><span class="p">,</span>
+            <span class="n">y_train</span><span class="p">,</span>
+            <span class="n">eval_set</span><span class="o">=</span><span class="p">[(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">),</span> <span class="p">(</span><span class="n">X_valid</span><span class="p">,</span> <span class="n">y_valid</span><span class="p">)],</span>
+            <span class="n">early_stopping_rounds</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+            <span class="n">verbose</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">params2</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">params2</span><span class="p">[</span><span class="s2">"learning_rate"</span><span class="p">]</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="s2">"learning_rate"</span><span class="p">]</span> <span class="o">*</span> <span class="mf">0.1</span>
+
+        <span class="n">model</span> <span class="o">=</span> <span class="n">LGBMClassifier</span><span class="p">(</span><span class="o">**</span><span class="n">params2</span><span class="p">)</span>
+        <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span>
+            <span class="n">X_train</span><span class="p">,</span>
+            <span class="n">y_train</span><span class="p">,</span>
+            <span class="n">eval_set</span><span class="o">=</span><span class="p">[(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">),</span> <span class="p">(</span><span class="n">X_valid</span><span class="p">,</span> <span class="n">y_valid</span><span class="p">)],</span>
+            <span class="n">early_stopping_rounds</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+            <span class="n">verbose</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+            <span class="n">init_model</span><span class="o">=</span><span class="n">pre_model</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">lgb_oof</span><span class="p">[</span><span class="n">valid_idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">X_valid</span><span class="p">)</span>
+        <span class="n">lgb_preds</span> <span class="o">+=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span> <span class="o">/</span> <span class="n">n_fold</span>
+
+    <span class="n">log_score</span> <span class="o">=</span> <span class="n">log_loss</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">lgb_oof</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Log Loss Score: </span><span class="si">{</span><span class="n">log_score</span><span class="si">:</span><span class="s2">.5f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">lgb_oof</span><span class="p">,</span> <span class="n">lgb_preds</span>
+
+
+<span class="c1"># XGB</span>
+<span class="k">def</span> <span class="nf">stratified_kfold_xgb</span><span class="p">(</span>
+    <span class="n">params</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">str</span><span class="p">]],</span>
+    <span class="n">n_fold</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">X</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+    <span class="n">y</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+    <span class="n">X_test</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]:</span>
+
+    <span class="n">folds</span> <span class="o">=</span> <span class="n">StratifiedKFold</span><span class="p">(</span><span class="n">n_splits</span><span class="o">=</span><span class="n">n_fold</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+    <span class="n">splits</span> <span class="o">=</span> <span class="n">folds</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+    <span class="n">xgb_oof</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">3</span><span class="p">))</span>
+    <span class="n">xgb_preds</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">X_test</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">3</span><span class="p">))</span>
+
+    <span class="k">for</span> <span class="n">fold</span><span class="p">,</span> <span class="p">(</span><span class="n">train_idx</span><span class="p">,</span> <span class="n">valid_idx</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">splits</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"============ Fold </span><span class="si">{</span><span class="n">fold</span><span class="si">}</span><span class="s2"> ============</span><span class="se">\n</span><span class="s2">"</span><span class="p">)</span>
+        <span class="n">X_train</span><span class="p">,</span> <span class="n">X_valid</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">train_idx</span><span class="p">],</span> <span class="n">X</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">valid_idx</span><span class="p">]</span>
+        <span class="n">y_train</span><span class="p">,</span> <span class="n">y_valid</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">train_idx</span><span class="p">],</span> <span class="n">y</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">valid_idx</span><span class="p">]</span>
+
+        <span class="n">model</span> <span class="o">=</span> <span class="n">XGBClassifier</span><span class="p">(</span><span class="o">**</span><span class="n">params</span><span class="p">)</span>
+        <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span>
+            <span class="n">X_train</span><span class="p">,</span>
+            <span class="n">y_train</span><span class="p">,</span>
+            <span class="n">eval_set</span><span class="o">=</span><span class="p">[(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">),</span> <span class="p">(</span><span class="n">X_valid</span><span class="p">,</span> <span class="n">y_valid</span><span class="p">)],</span>
+            <span class="n">early_stopping_rounds</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+            <span class="n">verbose</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="n">xgb_oof</span><span class="p">[</span><span class="n">valid_idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">X_valid</span><span class="p">)</span>
+        <span class="n">xgb_preds</span> <span class="o">+=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span> <span class="o">/</span> <span class="n">n_fold</span>
+
+    <span class="n">log_score</span> <span class="o">=</span> <span class="n">log_loss</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">xgb_oof</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Log Loss Score: </span><span class="si">{</span><span class="n">log_score</span><span class="si">:</span><span class="s2">.5f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">xgb_oof</span><span class="p">,</span> <span class="n">xgb_preds</span>
+
+
+<span class="c1"># Random Foreset</span>
+<span class="k">def</span> <span class="nf">stratified_kfold_rf</span><span class="p">(</span>
+    <span class="n">params</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">bool</span><span class="p">]],</span>
+    <span class="n">n_fold</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">X</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+    <span class="n">y</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+    <span class="n">X_test</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]:</span>
+
+    <span class="n">folds</span> <span class="o">=</span> <span class="n">StratifiedKFold</span><span class="p">(</span><span class="n">n_splits</span><span class="o">=</span><span class="n">n_fold</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+    <span class="n">splits</span> <span class="o">=</span> <span class="n">folds</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+    <span class="n">rf_oof</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">3</span><span class="p">))</span>
+    <span class="n">rf_preds</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">X_test</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">3</span><span class="p">))</span>
+
+    <span class="k">for</span> <span class="n">fold</span><span class="p">,</span> <span class="p">(</span><span class="n">train_idx</span><span class="p">,</span> <span class="n">valid_idx</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">splits</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"============ Fold </span><span class="si">{</span><span class="n">fold</span><span class="si">}</span><span class="s2"> ============</span><span class="se">\n</span><span class="s2">"</span><span class="p">)</span>
+        <span class="n">X_train</span><span class="p">,</span> <span class="n">X_valid</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">train_idx</span><span class="p">],</span> <span class="n">X</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">valid_idx</span><span class="p">]</span>
+        <span class="n">y_train</span><span class="p">,</span> <span class="n">y_valid</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">train_idx</span><span class="p">],</span> <span class="n">y</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">valid_idx</span><span class="p">]</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">(</span><span class="o">**</span><span class="n">params</span><span class="p">)</span>
+        <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span>
+            <span class="n">X_train</span><span class="p">,</span>
+            <span class="n">y_train</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="n">rf_oof</span><span class="p">[</span><span class="n">valid_idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">X_valid</span><span class="p">)</span>
+        <span class="n">rf_preds</span> <span class="o">+=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span> <span class="o">/</span> <span class="n">n_fold</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Log Loss Score: </span><span class="si">{</span><span class="n">log_loss</span><span class="p">(</span><span class="n">y_valid</span><span class="p">,</span> <span class="n">rf_oof</span><span class="p">[</span><span class="n">valid_idx</span><span class="p">])</span><span class="si">:</span><span class="s2">.5f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+
+    <span class="n">log_score</span> <span class="o">=</span> <span class="n">log_loss</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">rf_oof</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Log Loss Score: </span><span class="si">{</span><span class="n">log_score</span><span class="si">:</span><span class="s2">.5f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">rf_oof</span><span class="p">,</span> <span class="n">rf_preds</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="CAT-TRAIN">
+<a class="anchor" href="#CAT-TRAIN" aria-hidden="true"><span class="octicon octicon-link"></span></a>CAT TRAIN<a class="anchor-link" href="#CAT-TRAIN"> </a>
+</h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<ul>
+<li>catboost 같은 경우 categorical한 feature를 고정시켜주는게 핵심이라고 생각하여 하이퍼파라미터튜닝에 신경을 씀</li>
+<li>하이퍼파라미터튜닝은 optuna 라이브러리로 했음</li>
+</ul>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="n">train_cat</span><span class="p">,</span> <span class="n">test_cat</span> <span class="o">=</span> <span class="n">cat_load_dataset</span><span class="p">()</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">train_cat</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s2">"credit"</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">train_cat</span><span class="p">[</span><span class="s2">"credit"</span><span class="p">]</span>
+
+<span class="n">X_test</span> <span class="o">=</span> <span class="n">test_cat</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="n">cat_params</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">"learning_rate"</span><span class="p">:</span> <span class="mf">0.026612467217016746</span><span class="p">,</span>
+    <span class="s2">"l2_leaf_reg"</span><span class="p">:</span> <span class="mf">0.3753065117824262</span><span class="p">,</span>
+    <span class="s2">"max_depth"</span><span class="p">:</span> <span class="mi">8</span><span class="p">,</span>
+    <span class="s2">"bagging_temperature"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s2">"min_data_in_leaf"</span><span class="p">:</span> <span class="mi">57</span><span class="p">,</span>
+    <span class="s2">"max_bin"</span><span class="p">:</span> <span class="mi">494</span><span class="p">,</span>
+    <span class="s2">"random_state"</span><span class="p">:</span> <span class="mi">42</span><span class="p">,</span>
+    <span class="s2">"eval_metric"</span><span class="p">:</span> <span class="s2">"MultiClass"</span><span class="p">,</span>
+    <span class="s2">"loss_function"</span><span class="p">:</span> <span class="s2">"MultiClass"</span><span class="p">,</span>
+    <span class="s2">"od_type"</span><span class="p">:</span> <span class="s2">"Iter"</span><span class="p">,</span>
+    <span class="s2">"od_wait"</span><span class="p">:</span> <span class="mi">500</span><span class="p">,</span>
+    <span class="s2">"iterations"</span><span class="p">:</span> <span class="mi">10000</span><span class="p">,</span>
+    <span class="s2">"cat_features"</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s2">"income_total"</span><span class="p">,</span>
+        <span class="s2">"income_type"</span><span class="p">,</span>
+        <span class="s2">"edu_type"</span><span class="p">,</span>
+        <span class="s2">"family_type"</span><span class="p">,</span>
+        <span class="s2">"house_type"</span><span class="p">,</span>
+        <span class="s2">"FLAG_MOBIL"</span><span class="p">,</span>
+        <span class="s2">"work_phone"</span><span class="p">,</span>
+        <span class="s2">"phone"</span><span class="p">,</span>
+        <span class="s2">"occyp_type"</span><span class="p">,</span>
+        <span class="s2">"begin_month"</span><span class="p">,</span>
+        <span class="s2">"DAYS_BIRTH_month"</span><span class="p">,</span>
+        <span class="s2">"DAYS_BIRTH_week"</span><span class="p">,</span>
+        <span class="s2">"Age"</span><span class="p">,</span>
+        <span class="s2">"DAYS_EMPLOYED_month"</span><span class="p">,</span>
+        <span class="s2">"DAYS_EMPLOYED_week"</span><span class="p">,</span>
+        <span class="s2">"before_EMPLOYED"</span><span class="p">,</span>
+        <span class="s2">"before_EMPLOYED_month"</span><span class="p">,</span>
+        <span class="s2">"before_EMPLOYED_week"</span><span class="p">,</span>
+        <span class="s2">"user_code"</span><span class="p">,</span>
+    <span class="p">],</span>
+<span class="p">}</span>
+
+<span class="n">cat_oof</span><span class="p">,</span> <span class="n">cat_preds</span> <span class="o">=</span> <span class="n">stratified_kfold_cat</span><span class="p">(</span><span class="n">cat_params</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">X_test</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>============ Fold 0 ============
+
+0:	learn: 1.0832640	test: 1.0829576	best: 1.0829576 (0)	total: 612ms	remaining: 1h 42m 1s
+100:	learn: 0.7323907	test: 0.6929501	best: 0.6929501 (100)	total: 44.8s	remaining: 1h 13m 10s
+200:	learn: 0.7058060	test: 0.6735975	best: 0.6735975 (200)	total: 1m 43s	remaining: 1h 23m 43s
+300:	learn: 0.6885144	test: 0.6706689	best: 0.6706689 (300)	total: 2m 45s	remaining: 1h 28m 45s
+400:	learn: 0.6701975	test: 0.6682080	best: 0.6681988 (388)	total: 3m 47s	remaining: 1h 30m 43s
+500:	learn: 0.6494751	test: 0.6664689	best: 0.6662605 (486)	total: 4m 50s	remaining: 1h 31m 54s
+600:	learn: 0.6290599	test: 0.6657848	best: 0.6657848 (600)	total: 5m 54s	remaining: 1h 32m 16s
+700:	learn: 0.6080674	test: 0.6648291	best: 0.6648201 (698)	total: 6m 57s	remaining: 1h 32m 14s
+800:	learn: 0.5895904	test: 0.6646412	best: 0.6643652 (761)	total: 8m 1s	remaining: 1h 32m 7s
+Stopped by overfitting detector  (100 iterations wait)
+
+bestTest = 0.6643651535
+bestIteration = 761
+
+Shrink model to first 762 iterations.
+============ Fold 1 ============
+
+0:	learn: 1.0831624	test: 1.0831592	best: 1.0831592 (0)	total: 300ms	remaining: 50m 1s
+100:	learn: 0.7348941	test: 0.6976274	best: 0.6976274 (100)	total: 43.6s	remaining: 1h 11m 13s
+200:	learn: 0.7091219	test: 0.6726237	best: 0.6726237 (200)	total: 1m 41s	remaining: 1h 22m 48s
+300:	learn: 0.6922515	test: 0.6687022	best: 0.6687022 (300)	total: 2m 42s	remaining: 1h 27m 30s
+400:	learn: 0.6724169	test: 0.6655868	best: 0.6655868 (400)	total: 3m 46s	remaining: 1h 30m 15s
+500:	learn: 0.6510442	test: 0.6630204	best: 0.6630204 (500)	total: 4m 50s	remaining: 1h 31m 49s
+600:	learn: 0.6316988	test: 0.6614526	best: 0.6614526 (600)	total: 5m 53s	remaining: 1h 32m 6s
+700:	learn: 0.6129803	test: 0.6607424	best: 0.6606660 (687)	total: 6m 57s	remaining: 1h 32m 12s
+800:	learn: 0.5930475	test: 0.6602049	best: 0.6601429 (793)	total: 8m 1s	remaining: 1h 32m 10s
+900:	learn: 0.5758447	test: 0.6597748	best: 0.6596636 (885)	total: 9m 5s	remaining: 1h 31m 47s
+Stopped by overfitting detector  (100 iterations wait)
+
+bestTest = 0.6596635705
+bestIteration = 885
+
+Shrink model to first 886 iterations.
+============ Fold 2 ============
+
+0:	learn: 1.0831179	test: 1.0832346	best: 1.0832346 (0)	total: 296ms	remaining: 49m 16s
+100:	learn: 0.7276329	test: 0.6945366	best: 0.6945366 (100)	total: 46.9s	remaining: 1h 16m 32s
+200:	learn: 0.7020572	test: 0.6763344	best: 0.6763344 (200)	total: 1m 49s	remaining: 1h 28m 43s
+300:	learn: 0.6849021	test: 0.6734732	best: 0.6734732 (300)	total: 2m 50s	remaining: 1h 31m 25s
+400:	learn: 0.6678492	test: 0.6713501	best: 0.6713501 (400)	total: 3m 52s	remaining: 1h 32m 47s
+500:	learn: 0.6489240	test: 0.6697702	best: 0.6697702 (500)	total: 4m 56s	remaining: 1h 33m 37s
+600:	learn: 0.6286190	test: 0.6682808	best: 0.6682423 (598)	total: 5m 59s	remaining: 1h 33m 43s
+700:	learn: 0.6096438	test: 0.6678665	best: 0.6678645 (698)	total: 7m 3s	remaining: 1h 33m 38s
+800:	learn: 0.5927210	test: 0.6675491	best: 0.6673454 (766)	total: 8m 7s	remaining: 1h 33m 15s
+900:	learn: 0.5757733	test: 0.6672852	best: 0.6670491 (844)	total: 9m 11s	remaining: 1h 32m 46s
+Stopped by overfitting detector  (100 iterations wait)
+
+bestTest = 0.6670490964
+bestIteration = 844
+
+Shrink model to first 845 iterations.
+============ Fold 3 ============
+
+0:	learn: 1.0831514	test: 1.0830642	best: 1.0830642 (0)	total: 310ms	remaining: 51m 42s
+100:	learn: 0.7303778	test: 0.7092536	best: 0.7092536 (100)	total: 49.1s	remaining: 1h 20m 16s
+200:	learn: 0.7023113	test: 0.6888512	best: 0.6888512 (200)	total: 2m 1s	remaining: 1h 38m 47s
+300:	learn: 0.6853219	test: 0.6845243	best: 0.6845243 (300)	total: 3m 10s	remaining: 1h 42m 11s
+400:	learn: 0.6675973	test: 0.6826500	best: 0.6826052 (388)	total: 4m 26s	remaining: 1h 46m 19s
+500:	learn: 0.6481532	test: 0.6808902	best: 0.6807720 (498)	total: 5m 35s	remaining: 1h 46m 7s
+600:	learn: 0.6285784	test: 0.6800921	best: 0.6800914 (595)	total: 6m 41s	remaining: 1h 44m 44s
+700:	learn: 0.6083968	test: 0.6796023	best: 0.6794399 (663)	total: 7m 46s	remaining: 1h 43m 12s
+800:	learn: 0.5899674	test: 0.6789752	best: 0.6788943 (792)	total: 8m 51s	remaining: 1h 41m 38s
+900:	learn: 0.5721327	test: 0.6783820	best: 0.6783820 (900)	total: 9m 55s	remaining: 1h 40m 14s
+1000:	learn: 0.5544633	test: 0.6780686	best: 0.6779982 (942)	total: 10m 59s	remaining: 1h 38m 45s
+1100:	learn: 0.5367893	test: 0.6780652	best: 0.6776773 (1037)	total: 12m 9s	remaining: 1h 38m 14s
+Stopped by overfitting detector  (100 iterations wait)
+
+bestTest = 0.6776773442
+bestIteration = 1037
+
+Shrink model to first 1038 iterations.
+============ Fold 4 ============
+
+0:	learn: 1.0831773	test: 1.0829793	best: 1.0829793 (0)	total: 296ms	remaining: 49m 23s
+100:	learn: 0.7273797	test: 0.6978671	best: 0.6978671 (100)	total: 52.4s	remaining: 1h 25m 35s
+200:	learn: 0.7017828	test: 0.6804129	best: 0.6804129 (200)	total: 1m 52s	remaining: 1h 31m 20s
+300:	learn: 0.6860989	test: 0.6769156	best: 0.6768962 (299)	total: 2m 54s	remaining: 1h 33m 37s
+400:	learn: 0.6681431	test: 0.6751760	best: 0.6751278 (397)	total: 3m 57s	remaining: 1h 34m 36s
+500:	learn: 0.6485897	test: 0.6737932	best: 0.6737814 (499)	total: 5m	remaining: 1h 35m 3s
+600:	learn: 0.6285877	test: 0.6730592	best: 0.6728910 (598)	total: 6m 4s	remaining: 1h 35m 3s
+700:	learn: 0.6097368	test: 0.6721781	best: 0.6721426 (699)	total: 7m 14s	remaining: 1h 35m 58s
+800:	learn: 0.5926144	test: 0.6721474	best: 0.6719096 (776)	total: 8m 19s	remaining: 1h 35m 39s
+Stopped by overfitting detector  (100 iterations wait)
+
+bestTest = 0.6719096303
+bestIteration = 776
+
+Shrink model to first 777 iterations.
+============ Fold 5 ============
+
+0:	learn: 1.0832186	test: 1.0833499	best: 1.0833499 (0)	total: 298ms	remaining: 49m 34s
+100:	learn: 0.7249238	test: 0.7056807	best: 0.7056807 (100)	total: 45.7s	remaining: 1h 14m 35s
+200:	learn: 0.6995494	test: 0.6906425	best: 0.6906425 (200)	total: 1m 45s	remaining: 1h 25m 49s
+300:	learn: 0.6821473	test: 0.6874748	best: 0.6874748 (300)	total: 2m 47s	remaining: 1h 30m 6s
+400:	learn: 0.6642446	test: 0.6860589	best: 0.6860589 (400)	total: 3m 50s	remaining: 1h 31m 59s
+500:	learn: 0.6449000	test: 0.6855384	best: 0.6855013 (499)	total: 4m 57s	remaining: 1h 34m 5s
+600:	learn: 0.6241052	test: 0.6848923	best: 0.6848844 (589)	total: 6m 1s	remaining: 1h 34m 17s
+700:	learn: 0.6055032	test: 0.6847242	best: 0.6844358 (666)	total: 7m 8s	remaining: 1h 34m 49s
+Stopped by overfitting detector  (100 iterations wait)
+
+bestTest = 0.6844358101
+bestIteration = 666
+
+Shrink model to first 667 iterations.
+============ Fold 6 ============
+
+0:	learn: 1.0831277	test: 1.0830831	best: 1.0830831 (0)	total: 307ms	remaining: 51m 6s
+100:	learn: 0.7299032	test: 0.7012839	best: 0.7012839 (100)	total: 47.2s	remaining: 1h 17m 8s
+200:	learn: 0.7043960	test: 0.6834182	best: 0.6833724 (188)	total: 1m 50s	remaining: 1h 29m 28s
+300:	learn: 0.6855325	test: 0.6793321	best: 0.6793321 (300)	total: 2m 51s	remaining: 1h 32m 8s
+400:	learn: 0.6663620	test: 0.6766051	best: 0.6766051 (400)	total: 3m 57s	remaining: 1h 34m 33s
+500:	learn: 0.6459442	test: 0.6751095	best: 0.6750316 (451)	total: 5m	remaining: 1h 35m 3s
+600:	learn: 0.6271073	test: 0.6742075	best: 0.6741912 (599)	total: 6m 4s	remaining: 1h 35m 3s
+700:	learn: 0.6080896	test: 0.6741347	best: 0.6738342 (628)	total: 7m 8s	remaining: 1h 34m 50s
+Stopped by overfitting detector  (100 iterations wait)
+
+bestTest = 0.6738341764
+bestIteration = 628
+
+Shrink model to first 629 iterations.
+============ Fold 7 ============
+
+0:	learn: 1.0832149	test: 1.0831962	best: 1.0831962 (0)	total: 307ms	remaining: 51m 7s
+100:	learn: 0.7276994	test: 0.7009006	best: 0.7009006 (100)	total: 46.4s	remaining: 1h 15m 49s
+200:	learn: 0.7030936	test: 0.6848146	best: 0.6847949 (198)	total: 1m 47s	remaining: 1h 27m 26s
+300:	learn: 0.6856515	test: 0.6815006	best: 0.6815006 (300)	total: 2m 49s	remaining: 1h 30m 58s
+400:	learn: 0.6681527	test: 0.6796503	best: 0.6795603 (384)	total: 3m 52s	remaining: 1h 32m 50s
+500:	learn: 0.6503799	test: 0.6787021	best: 0.6785460 (493)	total: 4m 56s	remaining: 1h 33m 43s
+600:	learn: 0.6319088	test: 0.6780125	best: 0.6779053 (597)	total: 6m	remaining: 1h 34m 4s
+700:	learn: 0.6122103	test: 0.6774097	best: 0.6773104 (698)	total: 7m 5s	remaining: 1h 34m
+800:	learn: 0.5939343	test: 0.6764882	best: 0.6764710 (799)	total: 8m 11s	remaining: 1h 34m 10s
+900:	learn: 0.5762685	test: 0.6764979	best: 0.6762442 (823)	total: 9m 15s	remaining: 1h 33m 32s
+1000:	learn: 0.5586911	test: 0.6759459	best: 0.6759226 (999)	total: 10m 19s	remaining: 1h 32m 49s
+1100:	learn: 0.5415433	test: 0.6763338	best: 0.6757223 (1032)	total: 11m 23s	remaining: 1h 32m 4s
+Stopped by overfitting detector  (100 iterations wait)
+
+bestTest = 0.6757223098
+bestIteration = 1032
+
+Shrink model to first 1033 iterations.
+============ Fold 8 ============
+
+0:	learn: 1.0831574	test: 1.0832749	best: 1.0832749 (0)	total: 294ms	remaining: 48m 55s
+100:	learn: 0.7315047	test: 0.7031190	best: 0.7031190 (100)	total: 41.5s	remaining: 1h 7m 51s
+200:	learn: 0.7056228	test: 0.6837846	best: 0.6837846 (200)	total: 1m 41s	remaining: 1h 22m 21s
+300:	learn: 0.6886137	test: 0.6786870	best: 0.6786859 (299)	total: 2m 41s	remaining: 1h 26m 42s
+400:	learn: 0.6690231	test: 0.6763612	best: 0.6762533 (394)	total: 3m 43s	remaining: 1h 29m 21s
+500:	learn: 0.6483094	test: 0.6741831	best: 0.6741430 (497)	total: 4m 47s	remaining: 1h 30m 45s
+600:	learn: 0.6292264	test: 0.6731320	best: 0.6731320 (600)	total: 5m 50s	remaining: 1h 31m 24s
+700:	learn: 0.6111467	test: 0.6726734	best: 0.6726604 (662)	total: 6m 54s	remaining: 1h 31m 35s
+800:	learn: 0.5925022	test: 0.6727895	best: 0.6724140 (727)	total: 7m 57s	remaining: 1h 31m 21s
+Stopped by overfitting detector  (100 iterations wait)
+
+bestTest = 0.672413971
+bestIteration = 727
+
+Shrink model to first 728 iterations.
+============ Fold 9 ============
+
+0:	learn: 1.0832009	test: 1.0827439	best: 1.0827439 (0)	total: 295ms	remaining: 49m 9s
+100:	learn: 0.7324903	test: 0.7048082	best: 0.7048082 (100)	total: 41s	remaining: 1h 6m 55s
+200:	learn: 0.7065402	test: 0.6859564	best: 0.6859419 (198)	total: 1m 37s	remaining: 1h 19m 28s
+300:	learn: 0.6876098	test: 0.6816683	best: 0.6816683 (300)	total: 2m 38s	remaining: 1h 25m 10s
+400:	learn: 0.6702645	test: 0.6800155	best: 0.6800155 (400)	total: 3m 41s	remaining: 1h 28m 33s
+500:	learn: 0.6496183	test: 0.6780545	best: 0.6779703 (494)	total: 4m 44s	remaining: 1h 30m 1s
+600:	learn: 0.6291321	test: 0.6770233	best: 0.6769609 (596)	total: 5m 48s	remaining: 1h 30m 49s
+700:	learn: 0.6095260	test: 0.6765122	best: 0.6765086 (674)	total: 6m 51s	remaining: 1h 31m 2s
+800:	learn: 0.5920527	test: 0.6764972	best: 0.6763723 (712)	total: 7m 54s	remaining: 1h 30m 52s
+Stopped by overfitting detector  (100 iterations wait)
+
+bestTest = 0.6763722857
+bestIteration = 712
+
+Shrink model to first 713 iterations.
+Log Loss Score: 0.67234
+
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="LGBM-TRAIN">
+<a class="anchor" href="#LGBM-TRAIN" aria-hidden="true"><span class="octicon octicon-link"></span></a>LGBM TRAIN<a class="anchor-link" href="#LGBM-TRAIN"> </a>
+</h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>하이퍼파라미터 튜닝은 역시 optuna를 사용</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="n">train</span><span class="p">,</span> <span class="n">test</span> <span class="o">=</span> <span class="n">load_dataset</span><span class="p">()</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">train</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s2">"credit"</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">train</span><span class="p">[</span><span class="s2">"credit"</span><span class="p">]</span>
+<span class="n">X_test</span> <span class="o">=</span> <span class="n">test</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_text output_error">
+<pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
+<span class="ansi-green-fg">&lt;ipython-input-1-a46e421ec841&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span><span class="ansi-blue-fg">()</span>
+<span class="ansi-green-fg">----&gt; 1</span><span class="ansi-red-fg"> </span>train<span class="ansi-blue-fg">,</span> test <span class="ansi-blue-fg">=</span> load_dataset<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">      2</span> X <span class="ansi-blue-fg">=</span> train<span class="ansi-blue-fg">.</span>drop<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">"credit"</span><span class="ansi-blue-fg">,</span> axis<span class="ansi-blue-fg">=</span><span class="ansi-cyan-fg">1</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">      3</span> y <span class="ansi-blue-fg">=</span> train<span class="ansi-blue-fg">[</span><span class="ansi-blue-fg">"credit"</span><span class="ansi-blue-fg">]</span>
+<span class="ansi-green-intense-fg ansi-bold">      4</span> X_test <span class="ansi-blue-fg">=</span> test<span class="ansi-blue-fg">.</span>copy<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
+
+<span class="ansi-red-fg">NameError</span>: name 'load_dataset' is not defined</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="n">lgb_params</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">"reg_alpha"</span><span class="p">:</span> <span class="mf">5.998770177220496e-05</span><span class="p">,</span>
+    <span class="s2">"reg_lambda"</span><span class="p">:</span> <span class="mf">0.07127674208132959</span><span class="p">,</span>
+    <span class="s2">"max_depth"</span><span class="p">:</span> <span class="mi">18</span><span class="p">,</span>
+    <span class="s2">"num_leaves"</span><span class="p">:</span> <span class="mi">125</span><span class="p">,</span>
+    <span class="s2">"colsample_bytree"</span><span class="p">:</span> <span class="mf">0.4241631237880101</span><span class="p">,</span>
+    <span class="s2">"subsample"</span><span class="p">:</span> <span class="mf">0.8876057928391585</span><span class="p">,</span>
+    <span class="s2">"subsample_freq"</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+    <span class="s2">"min_child_samples"</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+    <span class="s2">"max_bin"</span><span class="p">:</span> <span class="mi">449</span><span class="p">,</span>
+    <span class="s2">"random_state"</span><span class="p">:</span> <span class="mi">42</span><span class="p">,</span>
+    <span class="s2">"boosting_type"</span><span class="p">:</span> <span class="s2">"gbdt"</span><span class="p">,</span>
+    <span class="s2">"learning_rate"</span><span class="p">:</span> <span class="mf">0.05</span><span class="p">,</span>
+    <span class="s2">"n_estimators"</span><span class="p">:</span> <span class="mi">10000</span><span class="p">,</span>
+    <span class="s2">"objective"</span><span class="p">:</span> <span class="s2">"multiclass"</span><span class="p">,</span>
+    <span class="s2">"metric"</span><span class="p">:</span> <span class="s2">"multi_logloss"</span><span class="p">,</span>
+<span class="p">}</span>
+<span class="n">lgbm_oof</span><span class="p">,</span> <span class="n">lgbm_preds</span> <span class="o">=</span> <span class="n">stratified_kfold_lgbm</span><span class="p">(</span><span class="n">lgb_params</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">X_test</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_text output_error">
+<pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
+<span class="ansi-green-fg">&lt;ipython-input-2-00803de4ed59&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span><span class="ansi-blue-fg">()</span>
+<span class="ansi-green-intense-fg ansi-bold">     16</span>     <span class="ansi-blue-fg">"metric"</span><span class="ansi-blue-fg">:</span> <span class="ansi-blue-fg">"multi_logloss"</span><span class="ansi-blue-fg">,</span>
+<span class="ansi-green-intense-fg ansi-bold">     17</span> }
+<span class="ansi-green-fg">---&gt; 18</span><span class="ansi-red-fg"> </span>lgbm_oof<span class="ansi-blue-fg">,</span> lgbm_preds <span class="ansi-blue-fg">=</span> stratified_kfold_lgbm<span class="ansi-blue-fg">(</span>lgb_params<span class="ansi-blue-fg">,</span> <span class="ansi-cyan-fg">10</span><span class="ansi-blue-fg">,</span> X<span class="ansi-blue-fg">,</span> y<span class="ansi-blue-fg">,</span> X_test<span class="ansi-blue-fg">)</span>
+
+<span class="ansi-red-fg">NameError</span>: name 'stratified_kfold_lgbm' is not defined</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="XGB-TRAIN">
+<a class="anchor" href="#XGB-TRAIN" aria-hidden="true"><span class="octicon octicon-link"></span></a>XGB TRAIN<a class="anchor-link" href="#XGB-TRAIN"> </a>
+</h2>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="n">xgb_params</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">"eta"</span><span class="p">:</span> <span class="mf">0.023839252347297356</span><span class="p">,</span>
+    <span class="s2">"reg_alpha"</span><span class="p">:</span> <span class="mf">6.99554614267605e-06</span><span class="p">,</span>
+    <span class="s2">"reg_lambda"</span><span class="p">:</span> <span class="mf">0.010419988953061583</span><span class="p">,</span>
+    <span class="s2">"max_depth"</span><span class="p">:</span> <span class="mi">15</span><span class="p">,</span>
+    <span class="s2">"max_leaves"</span><span class="p">:</span> <span class="mi">159</span><span class="p">,</span>
+    <span class="s2">"colsample_bytree"</span><span class="p">:</span> <span class="mf">0.4515469593932409</span><span class="p">,</span>
+    <span class="s2">"subsample"</span><span class="p">:</span> <span class="mf">0.7732694309118915</span><span class="p">,</span>
+    <span class="s2">"min_child_weight"</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+    <span class="s2">"gamma"</span><span class="p">:</span> <span class="mf">0.6847131315687576</span><span class="p">,</span>
+    <span class="s2">"random_state"</span><span class="p">:</span> <span class="mi">42</span><span class="p">,</span>
+    <span class="s2">"n_estimators"</span><span class="p">:</span> <span class="mi">10000</span><span class="p">,</span>
+    <span class="s2">"objective"</span><span class="p">:</span> <span class="s2">"multi:softmax"</span><span class="p">,</span>
+    <span class="s2">"eval_metric"</span><span class="p">:</span> <span class="s2">"mlogloss"</span><span class="p">,</span>
+<span class="p">}</span>
+<span class="n">xgb_oof</span><span class="p">,</span> <span class="n">xgb_preds</span> <span class="o">=</span> <span class="n">stratified_kfold_xgb</span><span class="p">(</span><span class="n">xgb_params</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">X_test</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="RANDOM-FOREST-TRAIN">
+<a class="anchor" href="#RANDOM-FOREST-TRAIN" aria-hidden="true"><span class="octicon octicon-link"></span></a>RANDOM FOREST TRAIN<a class="anchor-link" href="#RANDOM-FOREST-TRAIN"> </a>
+</h2>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="n">rf_params</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">"criterion"</span><span class="p">:</span> <span class="s2">"gini"</span><span class="p">,</span>
+        <span class="s2">"n_estimators"</span><span class="p">:</span> <span class="mi">300</span><span class="p">,</span>
+        <span class="s2">"min_samples_split"</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
+        <span class="s2">"min_samples_leaf"</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+        <span class="s2">"max_features"</span><span class="p">:</span> <span class="s2">"auto"</span><span class="p">,</span>
+        <span class="s2">"oob_score"</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="s2">"random_state"</span><span class="p">:</span> <span class="mi">42</span><span class="p">,</span>
+        <span class="s2">"n_jobs"</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+    <span class="p">}</span>
+<span class="n">rf_oof</span><span class="p">,</span> <span class="n">rf_preds</span> <span class="o">=</span> <span class="n">stratified_kfold_rf</span><span class="p">(</span><span class="n">rf_params</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">X_test</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="n">train</span><span class="p">,</span> <span class="n">test</span> <span class="o">=</span> <span class="n">load_dataset</span><span class="p">()</span>
+<span class="n">train_x</span> <span class="o">=</span> <span class="n">train</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s2">"credit"</span><span class="p">,</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">train_y</span> <span class="o">=</span> <span class="n">train</span><span class="p">[</span><span class="s1">'credit'</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="배열-합치기">
+<a class="anchor" href="#%EB%B0%B0%EC%97%B4-%ED%95%A9%EC%B9%98%EA%B8%B0" aria-hidden="true"><span class="octicon octicon-link"></span></a>배열 합치기<a class="anchor-link" href="#%EB%B0%B0%EC%97%B4-%ED%95%A9%EC%B9%98%EA%B8%B0"> </a>
+</h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>catboost와 lgbm, xgb, randomforest를 통해 생성한 배열들을 합쳐준다.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="n">train_pred</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">cat_oof</span><span class="p">,</span> <span class="n">lgbm_oof</span><span class="p">,</span> <span class="n">xgb_oof</span><span class="p">,</span> <span class="n">rf_oof</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">train_pred</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="n">test_pred</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">cat_preds</span><span class="p">,</span> <span class="n">lgbm_preds</span><span class="p">,</span> <span class="n">xgb_preds</span><span class="p">,</span> <span class="n">rf_preds</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">test_pred</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="PYTORCH-TABULAR">
+<a class="anchor" href="#PYTORCH-TABULAR" aria-hidden="true"><span class="octicon octicon-link"></span></a>PYTORCH TABULAR<a class="anchor-link" href="#PYTORCH-TABULAR"> </a>
+</h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<ul>
+<li>Stacking Ensemble을 사용하며 학습 진행</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>TabNet은 입력으로 Categorical변수를 Embedding 하기 때문에, Categorical 변수라는 것을 지정해주어야 한다.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="n">device</span> <span class="o">=</span> <span class="s2">"cuda"</span> <span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">()</span> <span class="k">else</span> <span class="s2">"cpu"</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>이후 TabNet의 Classifier를 정의해준다.<br>
+Approximate Range of Model Hyperparameters:<br>
+n_d, n_a: 8 to 512<br>
+batch size: 256 to 32768<br>
+virtual batch size: 128 to 2048<br>
+sparsity regularization constant: 0 to 0.00001<br>
+number of shared GLU Blocks: 2 to 10<br>
+number of independent decision Blocks: 2 to 10<br>
+relaxation constant: 1 to 2.5<br>
+number of decision steps: 2 to 10<br>
+batch normalization momentum: 0.5 to 0.98</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>첫 번째 공유 GLU 블록(또는 블록이 공유되지 않는 경우 첫 번째 독립 블록)은 입력 피쳐의 차원을 n_a+n_d와 같은 차원으로 줄이기 때문에 독특하다. n_a는 다음 단계의 주의 변압기에 입력된 형상의 치수이고 n_d는 최종 결과를 계산하는 데 사용되는 형상의 치수이다. 이러한 기능은 스플리터에 도달할 때까지 함께 처리됩니다. ReLU 활성화는 n_d 차원 벡터에 적용됩니다.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>mask_type을 entmax로 설정했는데, 이는 softmax함수의 한 종류이다.<br>
+softmax 함수는 하나의 샘플 데이터에 대한 예측값으로 모든 가능한 정답지에 대해서 정답일 확률의 합이 1이 되도록 하는것<br>
+즉 정답지의 총 개수가 k일때, k차원의 벡터를 입력받아 각 클래스에 대한 확률을 추정하는 것</p>
+<p>entmax는 sparsemax를 더 일반화시킨 것으로 좀더 훈련이 용이하다.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="n">n_fold</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">folds</span> <span class="o">=</span> <span class="n">StratifiedKFold</span><span class="p">(</span><span class="n">n_splits</span><span class="o">=</span><span class="n">n_fold</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">splits</span> <span class="o">=</span> <span class="n">folds</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">train_pred</span><span class="p">,</span> <span class="n">train_y</span><span class="p">)</span>
+<span class="n">net_oof</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">train_pred</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">3</span><span class="p">))</span>
+<span class="n">net_preds</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">test_pred</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">3</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">fold</span><span class="p">,</span> <span class="p">(</span><span class="n">train_idx</span><span class="p">,</span> <span class="n">valid_idx</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">splits</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"============ Fold </span><span class="si">{</span><span class="n">fold</span><span class="si">}</span><span class="s2"> ============</span><span class="se">\n</span><span class="s2">"</span><span class="p">)</span>
+    <span class="n">X_train</span><span class="p">,</span> <span class="n">X_valid</span> <span class="o">=</span> <span class="n">train_pred</span><span class="p">[</span><span class="n">train_idx</span><span class="p">],</span> <span class="n">train_pred</span><span class="p">[</span><span class="n">valid_idx</span><span class="p">]</span>
+    <span class="n">y_train</span><span class="p">,</span> <span class="n">y_valid</span> <span class="o">=</span> <span class="n">train_y</span><span class="p">[</span><span class="n">train_idx</span><span class="p">],</span> <span class="n">train_y</span><span class="p">[</span><span class="n">valid_idx</span><span class="p">]</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">TabNetMultiTaskClassifier</span><span class="p">(</span>
+            <span class="n">n_d</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span> <span class="n">n_a</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span> <span class="n">n_steps</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+            <span class="n">lambda_sparse</span><span class="o">=</span><span class="mf">1e-4</span><span class="p">,</span>
+            <span class="n">optimizer_fn</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">,</span>
+            <span class="n">optimizer_params</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">lr</span><span class="o">=</span><span class="mf">2e-2</span><span class="p">),</span>
+            <span class="n">scheduler_params</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"gamma"</span><span class="p">:</span> <span class="mf">0.9</span><span class="p">,</span> <span class="s2">"step_size"</span><span class="p">:</span> <span class="mi">50</span><span class="p">},</span>
+            <span class="n">scheduler_fn</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">lr_scheduler</span><span class="o">.</span><span class="n">StepLR</span><span class="p">,</span>
+            <span class="n">mask_type</span><span class="o">=</span><span class="s2">"entmax"</span><span class="p">,</span> 
+            <span class="n">device_name</span><span class="o">=</span><span class="n">device</span>
+    <span class="p">)</span>
+
+    <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span>
+        <span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span>
+        <span class="n">eval_set</span><span class="o">=</span><span class="p">[(</span><span class="n">X_valid</span><span class="p">,</span> <span class="n">y_valid</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">))],</span>
+        <span class="n">max_epochs</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+        <span class="n">batch_size</span><span class="o">=</span><span class="mi">1024</span><span class="p">,</span>
+        <span class="n">eval_metric</span><span class="o">=</span><span class="p">[</span><span class="s2">"logloss"</span><span class="p">],</span>
+        <span class="n">virtual_batch_size</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span>
+        <span class="n">num_workers</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+        <span class="n">drop_last</span><span class="o">=</span><span class="kc">False</span>
+    <span class="p">)</span>
+    <span class="n">net_oof</span><span class="p">[</span><span class="n">valid_idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">X_valid</span><span class="p">)</span>
+    <span class="n">net_preds</span> <span class="o">+=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">test_pred</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="o">/</span> <span class="n">n_fold</span>
+<span class="n">log_score</span> <span class="o">=</span> <span class="n">log_loss</span><span class="p">(</span><span class="n">train_y</span><span class="p">,</span> <span class="n">net_oof</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Log Loss Score: </span><span class="si">{</span><span class="n">log_score</span><span class="si">:</span><span class="s2">.5f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+</div>
+
+
+
+  </div><a class="u-url" href="/shw9807blog/%EB%8D%B0%EC%9D%B4%EC%BD%98/2022/02/10/%EC%8B%A0%EC%9A%A9%EC%B9%B4%EB%93%9C_%EC%97%B0%EC%B2%B4%EC%98%88%EC%B8%A1.html" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/shw9807blog/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/shw9807blog/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/shw9807blog/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>An easy to use blogging platform with support for Jupyter Notebooks.</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/https%3A%2F%2Fshw9807.github.io" target="_blank" title="https://shw9807.github.io"><svg class="svg-icon grey"><use xlink:href="/shw9807blog/assets/minima-social-icons.svg#github"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
