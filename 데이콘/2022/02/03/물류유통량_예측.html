@@ -1,0 +1,1996 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>[Colab] 물류 유통량 예측 | 블로그는 어려워</title>
+<meta name="generator" content="Jekyll v4.1.1" />
+<meta property="og:title" content="[Colab] 물류 유통량 예측" />
+<meta name="author" content="shw9807" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="An easy to use blogging platform with support for Jupyter Notebooks." />
+<meta property="og:description" content="An easy to use blogging platform with support for Jupyter Notebooks." />
+<link rel="canonical" href="https://shw9807.github.io/shw9807blog/%EB%8D%B0%EC%9D%B4%EC%BD%98/2022/02/03/%EB%AC%BC%EB%A5%98%EC%9C%A0%ED%86%B5%EB%9F%89_%EC%98%88%EC%B8%A1.html" />
+<meta property="og:url" content="https://shw9807.github.io/shw9807blog/%EB%8D%B0%EC%9D%B4%EC%BD%98/2022/02/03/%EB%AC%BC%EB%A5%98%EC%9C%A0%ED%86%B5%EB%9F%89_%EC%98%88%EC%B8%A1.html" />
+<meta property="og:site_name" content="블로그는 어려워" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2022-02-03T00:00:00-06:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="[Colab] 물류 유통량 예측" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"shw9807"},"dateModified":"2022-02-03T00:00:00-06:00","datePublished":"2022-02-03T00:00:00-06:00","description":"An easy to use blogging platform with support for Jupyter Notebooks.","headline":"[Colab] 물류 유통량 예측","mainEntityOfPage":{"@type":"WebPage","@id":"https://shw9807.github.io/shw9807blog/%EB%8D%B0%EC%9D%B4%EC%BD%98/2022/02/03/%EB%AC%BC%EB%A5%98%EC%9C%A0%ED%86%B5%EB%9F%89_%EC%98%88%EC%B8%A1.html"},"url":"https://shw9807.github.io/shw9807blog/%EB%8D%B0%EC%9D%B4%EC%BD%98/2022/02/03/%EB%AC%BC%EB%A5%98%EC%9C%A0%ED%86%B5%EB%9F%89_%EC%98%88%EC%B8%A1.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/shw9807blog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://shw9807.github.io/shw9807blog/feed.xml" title="블로그는 어려워" /><link rel="shortcut icon" type="image/x-icon" href="/shw9807blog/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/katex.min.css" integrity="sha512-h7nl+xz8wgDlNM4NqKEM4F1NkIRS17M9+uJwIGwuo8vGqIl4BhuCKdxjWEINm+xyrUjNCnK5dCrhM0sj+wTIXw==" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/katex.min.js" integrity="sha512-/CMIhXiDA3m2c9kzRyd97MTb3MC6OVnx4TElQ7fkkoRghwDf6gi41gaT1PwF270W6+J60uTmwgeRpNpJdRV6sg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/contrib/auto-render.min.js" integrity="sha512-Do7uJAaHZm5OLrIv/yN4w0iG1dbu01kzdMNnFfu/mAqgUk6Nniv2JYHcwH+cNwjqgLcqcuBBk+JRvprLVI8azg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha512-0doc9hKxR3PYwso42RD1p5ySZpzzuDiOwMrdCEh2WdJZCjcmFKc/wEnL+z8fBQrnHoiNWbo+3fiGkOYXBdQp4A==" crossorigin="anonymous"></script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement( document.body, {
+        delimiters: [
+            {left: "$$", right: "$$", display: true},
+            {left: "[%", right: "%]", display: true},
+            {left: "$", right: "$", display: false}
+        ]}
+        );
+    });
+    </script>
+
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/shw9807blog/">블로그는 어려워</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/shw9807blog/about/">about</a><a class="page-link" href="/shw9807blog/search/">Search</a><a class="page-link" href="/shw9807blog/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">[Colab] 물류 유통량 예측</h1><p class="post-meta post-meta-title"><time class="dt-published" datetime="2022-02-03T00:00:00-06:00" itemprop="datePublished">
+        Feb 3, 2022
+      </time>• 
+          <span itemprop="author" itemscope itemtype="http://schema.org/Person">
+            <span class="p-author h-card" itemprop="name">shw9807</span></span>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      17 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/shw9807blog/categories/#데이콘">데이콘</a>
+        
+      
+      </p>
+    
+
+    
+      
+        <div class="pb-5 d-flex flex-justify-center">
+          <div class="px-2">
+
+    <a href="https://github.com/shw9807/shw9807blog/tree/master/_notebooks/2022-02-03-물류유통량_예측.ipynb" role="button" target="_blank">
+<img class="notebook-badge-image" src="/shw9807blog/assets/badges/github.svg" alt="View On GitHub">
+    </a>
+</div>
+
+          <div class="px-2">
+    <a href="https://mybinder.org/v2/gh/shw9807/shw9807blog/master?filepath=_notebooks%2F2022-02-03-%EB%AC%BC%EB%A5%98%EC%9C%A0%ED%86%B5%EB%9F%89_%EC%98%88%EC%B8%A1.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/shw9807blog/assets/badges/binder.svg" alt="Open In Binder"/>
+    </a>
+</div>
+
+          <div class="px-2">
+    <a href="https://colab.research.google.com/github/shw9807/shw9807blog/blob/master/_notebooks/2022-02-03-물류유통량_예측.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/shw9807blog/assets/badges/colab.svg" alt="Open In Colab"/>
+    </a>
+</div>
+          <div class="px-2">
+  <a href="https://deepnote.com/launch?url=https%3A%2F%2Fgithub.com%2Fshw9807%2Fshw9807blog%2Fblob%2Fmaster%2F_notebooks%2F2022-02-03-%EB%AC%BC%EB%A5%98%EC%9C%A0%ED%86%B5%EB%9F%89_%EC%98%88%EC%B8%A1.ipynb" target="_blank">
+      <img class="notebook-badge-image" src="/shw9807blog/assets/badges/deepnote.svg" alt="Launch in Deepnote"/>
+  </a>
+</div>
+
+        </div>
+      </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul id="toc" class="section-nav">
+<li class="toc-entry toc-h1"><a href="#물류-유통량-예측">물류 유통량 예측 </a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#1.Library-&-Data-Load">1.Library &amp; Data Load </a></li>
+<li class="toc-entry toc-h2"><a href="#2.-Data-Preprocess">2. Data Preprocess </a></li>
+<li class="toc-entry toc-h2"><a href="#3.모델링">3.모델링 </a></li>
+</ul>
+</li>
+</ul><!--
+#################################################
+### THIS FILE WAS AUTOGENERATED! DO NOT EDIT! ###
+#################################################
+# file to edit: _notebooks/2022-02-03-물류유통량_예측.ipynb
+-->
+
+<div class="container" id="notebook-container">
+        
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><a href="https://colab.research.google.com/github/shw9807/shw9807blog/blob/master/%EB%AC%BC%EB%A5%98%EC%9C%A0%ED%86%B5%EB%9F%89%EC%98%88%EC%B8%A1.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"></a></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="물류-유통량-예측">
+<a class="anchor" href="#%EB%AC%BC%EB%A5%98-%EC%9C%A0%ED%86%B5%EB%9F%89-%EC%98%88%EC%B8%A1" aria-hidden="true"><span class="octicon octicon-link"></span></a>물류 유통량 예측<a class="anchor-link" href="#%EB%AC%BC%EB%A5%98-%EC%9C%A0%ED%86%B5%EB%9F%89-%EC%98%88%EC%B8%A1"> </a>
+</h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="1.Library-&amp;-Data-Load">
+<a class="anchor" href="#1.Library-&amp;-Data-Load" aria-hidden="true"><span class="octicon octicon-link"></span></a>1.Library &amp; Data Load<a class="anchor-link" href="#1.Library-&amp;-Data-Load"> </a>
+</h2>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="kn">from</span> <span class="nn">google.colab</span> <span class="kn">import</span> <span class="n">drive</span>
+<span class="n">drive</span><span class="o">.</span><span class="n">mount</span><span class="p">(</span><span class="s1">'/content/drive'</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Drive already mounted at /content/drive; to attempt to forcibly remount, call drive.mount("/content/drive", force_remount=True).
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="err">!</span><span class="n">pip</span> <span class="n">install</span> <span class="n">catboost</span>
+<span class="err">!</span><span class="n">pip</span> <span class="n">install</span> <span class="n">optuna</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Requirement already satisfied: catboost in /usr/local/lib/python3.7/dist-packages (1.0.4)
+Requirement already satisfied: six in /usr/local/lib/python3.7/dist-packages (from catboost) (1.15.0)
+Requirement already satisfied: pandas&gt;=0.24.0 in /usr/local/lib/python3.7/dist-packages (from catboost) (1.3.5)
+Requirement already satisfied: matplotlib in /usr/local/lib/python3.7/dist-packages (from catboost) (3.2.2)
+Requirement already satisfied: scipy in /usr/local/lib/python3.7/dist-packages (from catboost) (1.4.1)
+Requirement already satisfied: graphviz in /usr/local/lib/python3.7/dist-packages (from catboost) (0.10.1)
+Requirement already satisfied: numpy&gt;=1.16.0 in /usr/local/lib/python3.7/dist-packages (from catboost) (1.19.5)
+Requirement already satisfied: plotly in /usr/local/lib/python3.7/dist-packages (from catboost) (5.5.0)
+Requirement already satisfied: pytz&gt;=2017.3 in /usr/local/lib/python3.7/dist-packages (from pandas&gt;=0.24.0-&gt;catboost) (2018.9)
+Requirement already satisfied: python-dateutil&gt;=2.7.3 in /usr/local/lib/python3.7/dist-packages (from pandas&gt;=0.24.0-&gt;catboost) (2.8.2)
+Requirement already satisfied: cycler&gt;=0.10 in /usr/local/lib/python3.7/dist-packages (from matplotlib-&gt;catboost) (0.11.0)
+Requirement already satisfied: pyparsing!=2.0.4,!=2.1.2,!=2.1.6,&gt;=2.0.1 in /usr/local/lib/python3.7/dist-packages (from matplotlib-&gt;catboost) (3.0.7)
+Requirement already satisfied: kiwisolver&gt;=1.0.1 in /usr/local/lib/python3.7/dist-packages (from matplotlib-&gt;catboost) (1.3.2)
+Requirement already satisfied: tenacity&gt;=6.2.0 in /usr/local/lib/python3.7/dist-packages (from plotly-&gt;catboost) (8.0.1)
+Requirement already satisfied: optuna in /usr/local/lib/python3.7/dist-packages (2.10.0)
+Requirement already satisfied: scipy!=1.4.0 in /usr/local/lib/python3.7/dist-packages (from optuna) (1.4.1)
+Requirement already satisfied: tqdm in /usr/local/lib/python3.7/dist-packages (from optuna) (4.62.3)
+Requirement already satisfied: PyYAML in /usr/local/lib/python3.7/dist-packages (from optuna) (3.13)
+Requirement already satisfied: cmaes&gt;=0.8.2 in /usr/local/lib/python3.7/dist-packages (from optuna) (0.8.2)
+Requirement already satisfied: alembic in /usr/local/lib/python3.7/dist-packages (from optuna) (1.7.6)
+Requirement already satisfied: colorlog in /usr/local/lib/python3.7/dist-packages (from optuna) (6.6.0)
+Requirement already satisfied: sqlalchemy&gt;=1.1.0 in /usr/local/lib/python3.7/dist-packages (from optuna) (1.4.31)
+Requirement already satisfied: cliff in /usr/local/lib/python3.7/dist-packages (from optuna) (3.10.0)
+Requirement already satisfied: packaging&gt;=20.0 in /usr/local/lib/python3.7/dist-packages (from optuna) (21.3)
+Requirement already satisfied: numpy in /usr/local/lib/python3.7/dist-packages (from optuna) (1.19.5)
+Requirement already satisfied: pyparsing!=3.0.5,&gt;=2.0.2 in /usr/local/lib/python3.7/dist-packages (from packaging&gt;=20.0-&gt;optuna) (3.0.7)
+Requirement already satisfied: greenlet!=0.4.17 in /usr/local/lib/python3.7/dist-packages (from sqlalchemy&gt;=1.1.0-&gt;optuna) (1.1.2)
+Requirement already satisfied: importlib-metadata in /usr/local/lib/python3.7/dist-packages (from sqlalchemy&gt;=1.1.0-&gt;optuna) (4.10.1)
+Requirement already satisfied: Mako in /usr/local/lib/python3.7/dist-packages (from alembic-&gt;optuna) (1.1.6)
+Requirement already satisfied: importlib-resources in /usr/local/lib/python3.7/dist-packages (from alembic-&gt;optuna) (5.4.0)
+Requirement already satisfied: pbr!=2.1.0,&gt;=2.0.0 in /usr/local/lib/python3.7/dist-packages (from cliff-&gt;optuna) (5.8.0)
+Requirement already satisfied: stevedore&gt;=2.0.1 in /usr/local/lib/python3.7/dist-packages (from cliff-&gt;optuna) (3.5.0)
+Requirement already satisfied: cmd2&gt;=1.0.0 in /usr/local/lib/python3.7/dist-packages (from cliff-&gt;optuna) (2.3.3)
+Requirement already satisfied: autopage&gt;=0.4.0 in /usr/local/lib/python3.7/dist-packages (from cliff-&gt;optuna) (0.5.0)
+Requirement already satisfied: PrettyTable&gt;=0.7.2 in /usr/local/lib/python3.7/dist-packages (from cliff-&gt;optuna) (3.0.0)
+Requirement already satisfied: attrs&gt;=16.3.0 in /usr/local/lib/python3.7/dist-packages (from cmd2&gt;=1.0.0-&gt;cliff-&gt;optuna) (21.4.0)
+Requirement already satisfied: pyperclip&gt;=1.6 in /usr/local/lib/python3.7/dist-packages (from cmd2&gt;=1.0.0-&gt;cliff-&gt;optuna) (1.8.2)
+Requirement already satisfied: typing-extensions in /usr/local/lib/python3.7/dist-packages (from cmd2&gt;=1.0.0-&gt;cliff-&gt;optuna) (3.10.0.2)
+Requirement already satisfied: wcwidth&gt;=0.1.7 in /usr/local/lib/python3.7/dist-packages (from cmd2&gt;=1.0.0-&gt;cliff-&gt;optuna) (0.2.5)
+Requirement already satisfied: zipp&gt;=0.5 in /usr/local/lib/python3.7/dist-packages (from importlib-metadata-&gt;sqlalchemy&gt;=1.1.0-&gt;optuna) (3.7.0)
+Requirement already satisfied: MarkupSafe&gt;=0.9.2 in /usr/local/lib/python3.7/dist-packages (from Mako-&gt;alembic-&gt;optuna) (2.0.1)
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">catboost</span> <span class="kn">import</span> <span class="n">CatBoostRegressor</span>
+
+<span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">StratifiedKFold</span><span class="p">,</span><span class="n">train_test_split</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">mean_squared_error</span>
+
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">import</span> <span class="nn">optuna</span>
+<span class="kn">from</span> <span class="nn">optuna.samplers</span> <span class="kn">import</span> <span class="n">TPESampler</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="n">path</span><span class="o">=</span><span class="s1">'/content/drive/MyDrive/Colab Notebooks/물류유통량예측/'</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="n">train</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">path</span><span class="o">+</span><span class="s1">'train_df.csv'</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">'CP949'</span><span class="p">)</span>
+<span class="n">test</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">path</span><span class="o">+</span><span class="s1">'test_df.csv'</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">'CP949'</span><span class="p">)</span>
+
+<span class="n">submission</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">path</span><span class="o">+</span><span class="s1">'sample_submission.csv'</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<ul>
+<li>index : 인덱스</li>
+<li>송하인_격자공간고유번호</li>
+<li>수하인 격자공간고유번호</li>
+<li>택배_카테고리</li>
+<li>운송장_건수</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="2.-Data-Preprocess">
+<a class="anchor" href="#2.-Data-Preprocess" aria-hidden="true"><span class="octicon octicon-link"></span></a>2. Data Preprocess<a class="anchor-link" href="#2.-Data-Preprocess"> </a>
+</h2>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="n">train</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>&lt;class 'pandas.core.frame.DataFrame'&gt;
+RangeIndex: 32000 entries, 0 to 31999
+Data columns (total 6 columns):
+ #   Column         Non-Null Count  Dtype 
+---  ------         --------------  ----- 
+ 0   index          32000 non-null  int64 
+ 1   SEND_SPG_INNB  32000 non-null  int64 
+ 2   REC_SPG_INNB   32000 non-null  int64 
+ 3   DL_GD_LCLS_NM  32000 non-null  object
+ 4   DL_GD_MCLS_NM  32000 non-null  object
+ 5   INVC_CONT      32000 non-null  int64 
+dtypes: int64(4), object(2)
+memory usage: 1.5+ MB
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="n">train</span><span class="p">[</span><span class="s1">'SEND_SPG_INNB'</span><span class="p">]</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>0    1129000014045300
+1    1135000009051200
+2    1135000030093100
+3    1154500002014200
+4    1165000021008300
+5    1168000013091300
+6    1171000019003100
+7    2623000012072300
+8    2626000011052400
+9    2726000034007300
+Name: SEND_SPG_INNB, dtype: int64</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="n">train</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+
+  <div id="df-2e6d8164-dfe3-424c-a850-49a0cc09c92b">
+    <div class="colab-df-container">
+      <div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>INVC_CONT</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>count</th>
+      <td>32000.000000</td>
+    </tr>
+    <tr>
+      <th>mean</th>
+      <td>4.767875</td>
+    </tr>
+    <tr>
+      <th>std</th>
+      <td>5.752122</td>
+    </tr>
+    <tr>
+      <th>min</th>
+      <td>3.000000</td>
+    </tr>
+    <tr>
+      <th>25%</th>
+      <td>3.000000</td>
+    </tr>
+    <tr>
+      <th>50%</th>
+      <td>3.000000</td>
+    </tr>
+    <tr>
+      <th>75%</th>
+      <td>5.000000</td>
+    </tr>
+    <tr>
+      <th>max</th>
+      <td>239.000000</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+      <button class="colab-df-convert" onclick="convertToInteractive('df-2e6d8164-dfe3-424c-a850-49a0cc09c92b')" title="Convert this dataframe to an interactive table." style="display:none;">
+        
+  &lt;svg xmlns="http://www.w3.org/2000/svg" height="24px"viewBox="0 0 24 24"
+       width="24px"&gt;
+    <path d="M0 0h24v24H0V0z" fill="none"></path>
+    <path d="M18.56 5.44l.94 2.06.94-2.06 2.06-.94-2.06-.94-.94-2.06-.94 2.06-2.06.94zm-11 1L8.5 8.5l.94-2.06 2.06-.94-2.06-.94L8.5 2.5l-.94 2.06-2.06.94zm10 10l.94 2.06.94-2.06 2.06-.94-2.06-.94-.94-2.06-.94 2.06-2.06.94z"></path><path d="M17.41 7.96l-1.37-1.37c-.4-.4-.92-.59-1.43-.59-.52 0-1.04.2-1.43.59L10.3 9.45l-7.72 7.72c-.78.78-.78 2.05 0 2.83L4 21.41c.39.39.9.59 1.41.59.51 0 1.02-.2 1.41-.59l7.78-7.78 2.81-2.81c.8-.78.8-2.07 0-2.86zM5.41 20L4 18.59l7.72-7.72 1.47 1.35L5.41 20z"></path>
+  &lt;/svg&gt;
+      </button>
+      
+  <style>
+    .colab-df-container {
+      display:flex;
+      flex-wrap:wrap;
+      gap: 12px;
+    }
+
+    .colab-df-convert {
+      background-color: #E8F0FE;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      display: none;
+      fill: #1967D2;
+      height: 32px;
+      padding: 0 0 0 0;
+      width: 32px;
+    }
+
+    .colab-df-convert:hover {
+      background-color: #E2EBFA;
+      box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);
+      fill: #174EA6;
+    }
+
+    [theme=dark] .colab-df-convert {
+      background-color: #3B4455;
+      fill: #D2E3FC;
+    }
+
+    [theme=dark] .colab-df-convert:hover {
+      background-color: #434B5C;
+      box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+      filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));
+      fill: #FFFFFF;
+    }
+  </style>
+
+      <script>
+        const buttonEl =
+          document.querySelector('#df-2e6d8164-dfe3-424c-a850-49a0cc09c92b button.colab-df-convert');
+        buttonEl.style.display =
+          google.colab.kernel.accessAllowed ? 'block' : 'none';
+
+        async function convertToInteractive(key) {
+          const element = document.querySelector('#df-2e6d8164-dfe3-424c-a850-49a0cc09c92b');
+          const dataTable =
+            await google.colab.kernel.invokeFunction('convertToInteractive',
+                                                     [key], {});
+          if (!dataTable) return;
+
+          const docLinkHtml = 'Like what you see? Visit the ' +
+            '<a target="_blank" href=https://colab.research.google.com/notebooks/data_table.ipynb>data table notebook</a>'
+            + ' to learn more about interactive tables.';
+          element.innerHTML = '';
+          dataTable['output_type'] = 'display_data';
+          await google.colab.output.renderOutput(dataTable, element);
+          const docLink = document.createElement('div');
+          docLink.innerHTML = docLinkHtml;
+          element.appendChild(docLink);
+        }
+      </script>
+    </div>
+  </div>
+  
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>송하인 격자공간고유번호와 수하인격자공간고유번호가 연속형 자료로 취급하면 안된다고 생각하였습니다.</p>
+<p>격자공간고유번호의 16자리 중 자릿수마다 담고 있는 정보가 다를 것이라 생각하였고, 데이터를 탐색해본 결과 1 ~ 5자리, 6 ~ 9자리, 10, 11 ~ 16자리가 가지고 있는 정보가 다를 것이라 생각했습니다.</p>
+<p>그리고 송하인 격자공간고유번호의 unique 수는 꽤 되지만 수하인 격자공간고유번호의 unique 수는 얼마 되지 않았습니다.</p>
+<p>따라서 송하인 격자공간고유번호는 1 ~ 5, 6 ~ 9, 10, 11 ~ 16자릿수로 나누고 수하인 격자공간고유번호는 자릿수 별로 변수를 생성하였습니다.</p>
+<p>총 22개의 설명변수로 이루어진 데이터로 변환하였습니다.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="k">def</span> <span class="nf">numround</span><span class="p">(</span><span class="n">number</span><span class="p">,</span> <span class="n">digit</span><span class="p">):</span>
+  <span class="n">num</span><span class="o">=</span><span class="p">[]</span>
+  <span class="k">while</span><span class="p">(</span><span class="n">number</span><span class="o">!=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="n">num</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">number</span> <span class="o">%</span> <span class="mi">10</span><span class="p">)</span>
+    <span class="n">number</span> <span class="o">=</span> <span class="n">number</span> <span class="o">//</span><span class="mi">10</span>
+
+  <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">num</span><span class="p">[</span><span class="o">-</span><span class="n">digit</span><span class="p">])</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">16</span><span class="p">)):</span>
+  <span class="n">train</span><span class="p">[</span><span class="sa">f</span><span class="s1">'SEND_SPG_INNB_</span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s1">'</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+  <span class="n">train</span><span class="p">[</span><span class="sa">f</span><span class="s1">'REC_SPG_INNB_</span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s1">'</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+  <span class="n">test</span><span class="p">[</span><span class="sa">f</span><span class="s1">'SEND_SPG_INNB_</span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s1">'</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+  <span class="n">test</span><span class="p">[</span><span class="sa">f</span><span class="s1">'REC_SPG_INNB_</span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s1">'</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+  <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">train</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+    <span class="n">train</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">j</span><span class="p">,</span><span class="sa">f</span><span class="s1">'SEND_SPG_INNB_</span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s1">'</span><span class="p">]</span><span class="o">=</span><span class="n">numround</span><span class="p">(</span><span class="n">train</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">j</span><span class="p">,</span><span class="s1">'SEND_SPG_INNB'</span><span class="p">],</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">train</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">j</span><span class="p">,</span><span class="sa">f</span><span class="s1">'REC_SPG_INNB_</span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s1">'</span><span class="p">]</span><span class="o">=</span><span class="n">numround</span><span class="p">(</span><span class="n">train</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">j</span><span class="p">,</span><span class="s1">'REC_SPG_INNB'</span><span class="p">],</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+
+  <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">test</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+    <span class="n">test</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">j</span><span class="p">,</span><span class="sa">f</span><span class="s1">'SEND_SPG_INNB_</span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s1">'</span><span class="p">]</span><span class="o">=</span><span class="n">numround</span><span class="p">(</span><span class="n">test</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">j</span><span class="p">,</span><span class="s1">'SEND_SPG_INNB'</span><span class="p">],</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">test</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">j</span><span class="p">,</span><span class="sa">f</span><span class="s1">'REC_SPG_INNB_</span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s1">'</span><span class="p">]</span><span class="o">=</span><span class="n">numround</span><span class="p">(</span><span class="n">test</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">j</span><span class="p">,</span><span class="s1">'REC_SPG_INNB'</span><span class="p">],</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>100%|██████████| 16/16 [07:34&lt;00:00, 28.40s/it]
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="n">train</span><span class="p">[</span><span class="s1">'SEND_SPG_INNB_1~5'</span><span class="p">]</span><span class="o">=</span><span class="n">train</span><span class="p">[</span><span class="s1">'SEND_SPG_INNB_1'</span><span class="p">]</span><span class="o">+</span><span class="n">train</span><span class="p">[</span><span class="s1">'SEND_SPG_INNB_2'</span><span class="p">]</span><span class="o">+</span><span class="n">train</span><span class="p">[</span><span class="s1">'SEND_SPG_INNB_3'</span><span class="p">]</span><span class="o">+</span><span class="n">train</span><span class="p">[</span><span class="s1">'SEND_SPG_INNB_4'</span><span class="p">]</span><span class="o">+</span><span class="n">train</span><span class="p">[</span><span class="s1">'SEND_SPG_INNB_5'</span><span class="p">]</span>
+<span class="n">train</span><span class="p">[</span><span class="s1">'SEND_SPG_INNB_6~9'</span><span class="p">]</span><span class="o">=</span><span class="n">train</span><span class="p">[</span><span class="s1">'SEND_SPG_INNB_6'</span><span class="p">]</span><span class="o">+</span><span class="n">train</span><span class="p">[</span><span class="s1">'SEND_SPG_INNB_7'</span><span class="p">]</span><span class="o">+</span><span class="n">train</span><span class="p">[</span><span class="s1">'SEND_SPG_INNB_8'</span><span class="p">]</span><span class="o">+</span><span class="n">train</span><span class="p">[</span><span class="s1">'SEND_SPG_INNB_9'</span><span class="p">]</span>
+<span class="n">train</span><span class="p">[</span><span class="s1">'SEND_SPG_INNB_10'</span><span class="p">]</span><span class="o">=</span><span class="n">train</span><span class="p">[</span><span class="s1">'SEND_SPG_INNB_10'</span><span class="p">]</span>
+<span class="n">train</span><span class="p">[</span><span class="s1">'SEND_SPG_INNB_11~16'</span><span class="p">]</span><span class="o">=</span><span class="n">train</span><span class="p">[</span><span class="s1">'SEND_SPG_INNB_11'</span><span class="p">]</span><span class="o">+</span><span class="n">train</span><span class="p">[</span><span class="s1">'SEND_SPG_INNB_12'</span><span class="p">]</span><span class="o">+</span><span class="n">train</span><span class="p">[</span><span class="s1">'SEND_SPG_INNB_13'</span><span class="p">]</span><span class="o">+</span><span class="n">train</span><span class="p">[</span><span class="s1">'SEND_SPG_INNB_14'</span><span class="p">]</span><span class="o">+</span><span class="n">train</span><span class="p">[</span><span class="s1">'SEND_SPG_INNB_15'</span><span class="p">]</span><span class="o">+</span><span class="n">train</span><span class="p">[</span><span class="s1">'SEND_SPG_INNB_16'</span><span class="p">]</span>
+
+<span class="n">test</span><span class="p">[</span><span class="s1">'SEND_SPG_INNB_1~5'</span><span class="p">]</span><span class="o">=</span><span class="n">test</span><span class="p">[</span><span class="s1">'SEND_SPG_INNB_1'</span><span class="p">]</span><span class="o">+</span><span class="n">test</span><span class="p">[</span><span class="s1">'SEND_SPG_INNB_2'</span><span class="p">]</span><span class="o">+</span><span class="n">test</span><span class="p">[</span><span class="s1">'SEND_SPG_INNB_3'</span><span class="p">]</span><span class="o">+</span><span class="n">test</span><span class="p">[</span><span class="s1">'SEND_SPG_INNB_4'</span><span class="p">]</span><span class="o">+</span><span class="n">test</span><span class="p">[</span><span class="s1">'SEND_SPG_INNB_5'</span><span class="p">]</span>
+<span class="n">test</span><span class="p">[</span><span class="s1">'SEND_SPG_INNB_6~9'</span><span class="p">]</span><span class="o">=</span><span class="n">test</span><span class="p">[</span><span class="s1">'SEND_SPG_INNB_6'</span><span class="p">]</span><span class="o">+</span><span class="n">test</span><span class="p">[</span><span class="s1">'SEND_SPG_INNB_7'</span><span class="p">]</span><span class="o">+</span><span class="n">test</span><span class="p">[</span><span class="s1">'SEND_SPG_INNB_8'</span><span class="p">]</span><span class="o">+</span><span class="n">test</span><span class="p">[</span><span class="s1">'SEND_SPG_INNB_9'</span><span class="p">]</span>
+<span class="n">test</span><span class="p">[</span><span class="s1">'SEND_SPG_INNB_10'</span><span class="p">]</span><span class="o">=</span><span class="n">test</span><span class="p">[</span><span class="s1">'SEND_SPG_INNB_10'</span><span class="p">]</span>
+<span class="n">test</span><span class="p">[</span><span class="s1">'SEND_SPG_INNB_11~16'</span><span class="p">]</span><span class="o">=</span><span class="n">test</span><span class="p">[</span><span class="s1">'SEND_SPG_INNB_11'</span><span class="p">]</span><span class="o">+</span><span class="n">test</span><span class="p">[</span><span class="s1">'SEND_SPG_INNB_12'</span><span class="p">]</span><span class="o">+</span><span class="n">test</span><span class="p">[</span><span class="s1">'SEND_SPG_INNB_13'</span><span class="p">]</span><span class="o">+</span><span class="n">test</span><span class="p">[</span><span class="s1">'SEND_SPG_INNB_14'</span><span class="p">]</span><span class="o">+</span><span class="n">test</span><span class="p">[</span><span class="s1">'SEND_SPG_INNB_15'</span><span class="p">]</span><span class="o">+</span><span class="n">test</span><span class="p">[</span><span class="s1">'SEND_SPG_INNB_16'</span><span class="p">]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="n">train</span><span class="o">.</span><span class="n">index</span><span class="o">=</span><span class="n">train</span><span class="p">[</span><span class="s1">'index'</span><span class="p">]</span>
+<span class="n">test</span><span class="o">.</span><span class="n">index</span><span class="o">=</span><span class="n">test</span><span class="p">[</span><span class="s1">'index'</span><span class="p">]</span>
+<span class="n">train</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s1">'REC_SPG_INNB'</span><span class="p">,</span><span class="s1">'SEND_SPG_INNB'</span><span class="p">,</span><span class="s1">'SEND_SPG_INNB_1'</span><span class="p">,</span><span class="s1">'SEND_SPG_INNB_2'</span><span class="p">,</span><span class="s1">'SEND_SPG_INNB_3'</span><span class="p">,</span><span class="s1">'SEND_SPG_INNB_4'</span><span class="p">,</span><span class="s1">'SEND_SPG_INNB_5'</span><span class="p">,</span><span class="s1">'SEND_SPG_INNB_6'</span><span class="p">,</span><span class="s1">'SEND_SPG_INNB_7'</span><span class="p">,</span>
+            <span class="s1">'SEND_SPG_INNB_8'</span><span class="p">,</span><span class="s1">'SEND_SPG_INNB_9'</span><span class="p">,</span><span class="s1">'SEND_SPG_INNB_11'</span><span class="p">,</span><span class="s1">'SEND_SPG_INNB_12'</span><span class="p">,</span><span class="s1">'SEND_SPG_INNB_13'</span><span class="p">,</span><span class="s1">'SEND_SPG_INNB_14'</span><span class="p">,</span><span class="s1">'SEND_SPG_INNB_15'</span><span class="p">,</span><span class="s1">'SEND_SPG_INNB_16'</span><span class="p">,</span><span class="s1">'index'</span><span class="p">],</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">test</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s1">'REC_SPG_INNB'</span><span class="p">,</span><span class="s1">'SEND_SPG_INNB'</span><span class="p">,</span><span class="s1">'SEND_SPG_INNB_1'</span><span class="p">,</span><span class="s1">'SEND_SPG_INNB_2'</span><span class="p">,</span><span class="s1">'SEND_SPG_INNB_3'</span><span class="p">,</span><span class="s1">'SEND_SPG_INNB_4'</span><span class="p">,</span><span class="s1">'SEND_SPG_INNB_5'</span><span class="p">,</span><span class="s1">'SEND_SPG_INNB_6'</span><span class="p">,</span><span class="s1">'SEND_SPG_INNB_7'</span><span class="p">,</span>
+            <span class="s1">'SEND_SPG_INNB_8'</span><span class="p">,</span><span class="s1">'SEND_SPG_INNB_9'</span><span class="p">,</span><span class="s1">'SEND_SPG_INNB_11'</span><span class="p">,</span><span class="s1">'SEND_SPG_INNB_12'</span><span class="p">,</span><span class="s1">'SEND_SPG_INNB_13'</span><span class="p">,</span><span class="s1">'SEND_SPG_INNB_14'</span><span class="p">,</span><span class="s1">'SEND_SPG_INNB_15'</span><span class="p">,</span><span class="s1">'SEND_SPG_INNB_16'</span><span class="p">,</span><span class="s1">'index'</span><span class="p">],</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">test</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+  <span class="n">train</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">=</span><span class="n">train</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">'category'</span><span class="p">)</span>
+  <span class="n">test</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">=</span><span class="n">test</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">'category'</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="n">X</span> <span class="o">=</span> <span class="n">train</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s1">'INVC_CONT'</span><span class="p">],</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">train</span><span class="p">[</span><span class="s1">'INVC_CONT'</span><span class="p">]</span>
+<span class="n">X_test</span> <span class="o">=</span> <span class="n">test</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="n">X</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+
+  <div id="df-f33eb4ae-bea0-4460-95bd-7cac7f373324">
+    <div class="colab-df-container">
+      <div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>DL_GD_LCLS_NM</th>
+      <th>DL_GD_MCLS_NM</th>
+      <th>REC_SPG_INNB_1</th>
+      <th>REC_SPG_INNB_2</th>
+      <th>REC_SPG_INNB_3</th>
+      <th>REC_SPG_INNB_4</th>
+      <th>REC_SPG_INNB_5</th>
+      <th>REC_SPG_INNB_6</th>
+      <th>REC_SPG_INNB_7</th>
+      <th>REC_SPG_INNB_8</th>
+      <th>REC_SPG_INNB_9</th>
+      <th>SEND_SPG_INNB_10</th>
+      <th>REC_SPG_INNB_10</th>
+      <th>REC_SPG_INNB_11</th>
+      <th>REC_SPG_INNB_12</th>
+      <th>REC_SPG_INNB_13</th>
+      <th>REC_SPG_INNB_14</th>
+      <th>REC_SPG_INNB_15</th>
+      <th>REC_SPG_INNB_16</th>
+      <th>SEND_SPG_INNB_1~5</th>
+      <th>SEND_SPG_INNB_6~9</th>
+      <th>SEND_SPG_INNB_11~16</th>
+    </tr>
+    <tr>
+      <th>index</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>패션의류</td>
+      <td>상의</td>
+      <td>5</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>2</td>
+      <td>2</td>
+      <td>4</td>
+      <td>0</td>
+      <td>0</td>
+      <td>4</td>
+      <td>6</td>
+      <td>3</td>
+      <td>0</td>
+      <td>0</td>
+      <td>13</td>
+      <td>1</td>
+      <td>12</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>생활/건강</td>
+      <td>반려동물</td>
+      <td>5</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>7</td>
+      <td>9</td>
+      <td>8</td>
+      <td>0</td>
+      <td>3</td>
+      <td>7</td>
+      <td>3</td>
+      <td>0</td>
+      <td>0</td>
+      <td>10</td>
+      <td>0</td>
+      <td>8</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>패션의류</td>
+      <td>기타패션의류</td>
+      <td>5</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>2</td>
+      <td>6</td>
+      <td>0</td>
+      <td>5</td>
+      <td>0</td>
+      <td>9</td>
+      <td>1</td>
+      <td>4</td>
+      <td>0</td>
+      <td>0</td>
+      <td>10</td>
+      <td>3</td>
+      <td>13</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>식품</td>
+      <td>농산물</td>
+      <td>5</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>3</td>
+      <td>1</td>
+      <td>2</td>
+      <td>5</td>
+      <td>0</td>
+      <td>8</td>
+      <td>7</td>
+      <td>4</td>
+      <td>0</td>
+      <td>0</td>
+      <td>16</td>
+      <td>0</td>
+      <td>7</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>식품</td>
+      <td>가공식품</td>
+      <td>5</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>7</td>
+      <td>1</td>
+      <td>7</td>
+      <td>0</td>
+      <td>5</td>
+      <td>1</td>
+      <td>2</td>
+      <td>0</td>
+      <td>0</td>
+      <td>13</td>
+      <td>2</td>
+      <td>11</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+      <button class="colab-df-convert" onclick="convertToInteractive('df-f33eb4ae-bea0-4460-95bd-7cac7f373324')" title="Convert this dataframe to an interactive table." style="display:none;">
+        
+  &lt;svg xmlns="http://www.w3.org/2000/svg" height="24px"viewBox="0 0 24 24"
+       width="24px"&gt;
+    <path d="M0 0h24v24H0V0z" fill="none"></path>
+    <path d="M18.56 5.44l.94 2.06.94-2.06 2.06-.94-2.06-.94-.94-2.06-.94 2.06-2.06.94zm-11 1L8.5 8.5l.94-2.06 2.06-.94-2.06-.94L8.5 2.5l-.94 2.06-2.06.94zm10 10l.94 2.06.94-2.06 2.06-.94-2.06-.94-.94-2.06-.94 2.06-2.06.94z"></path><path d="M17.41 7.96l-1.37-1.37c-.4-.4-.92-.59-1.43-.59-.52 0-1.04.2-1.43.59L10.3 9.45l-7.72 7.72c-.78.78-.78 2.05 0 2.83L4 21.41c.39.39.9.59 1.41.59.51 0 1.02-.2 1.41-.59l7.78-7.78 2.81-2.81c.8-.78.8-2.07 0-2.86zM5.41 20L4 18.59l7.72-7.72 1.47 1.35L5.41 20z"></path>
+  &lt;/svg&gt;
+      </button>
+      
+  <style>
+    .colab-df-container {
+      display:flex;
+      flex-wrap:wrap;
+      gap: 12px;
+    }
+
+    .colab-df-convert {
+      background-color: #E8F0FE;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      display: none;
+      fill: #1967D2;
+      height: 32px;
+      padding: 0 0 0 0;
+      width: 32px;
+    }
+
+    .colab-df-convert:hover {
+      background-color: #E2EBFA;
+      box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);
+      fill: #174EA6;
+    }
+
+    [theme=dark] .colab-df-convert {
+      background-color: #3B4455;
+      fill: #D2E3FC;
+    }
+
+    [theme=dark] .colab-df-convert:hover {
+      background-color: #434B5C;
+      box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+      filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));
+      fill: #FFFFFF;
+    }
+  </style>
+
+      <script>
+        const buttonEl =
+          document.querySelector('#df-f33eb4ae-bea0-4460-95bd-7cac7f373324 button.colab-df-convert');
+        buttonEl.style.display =
+          google.colab.kernel.accessAllowed ? 'block' : 'none';
+
+        async function convertToInteractive(key) {
+          const element = document.querySelector('#df-f33eb4ae-bea0-4460-95bd-7cac7f373324');
+          const dataTable =
+            await google.colab.kernel.invokeFunction('convertToInteractive',
+                                                     [key], {});
+          if (!dataTable) return;
+
+          const docLinkHtml = 'Like what you see? Visit the ' +
+            '<a target="_blank" href=https://colab.research.google.com/notebooks/data_table.ipynb>data table notebook</a>'
+            + ' to learn more about interactive tables.';
+          element.innerHTML = '';
+          dataTable['output_type'] = 'display_data';
+          await google.colab.output.renderOutput(dataTable, element);
+          const docLink = document.createElement('div');
+          docLink.innerHTML = docLinkHtml;
+          element.appendChild(docLink);
+        }
+      </script>
+    </div>
+  </div>
+  
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="n">y</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>index
+0     3
+1     3
+2     9
+3    10
+4     3
+Name: INVC_CONT, dtype: int64</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="n">X_test</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+
+  <div id="df-73328244-199a-45d7-af03-0b9dcadb8dc7">
+    <div class="colab-df-container">
+      <div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>DL_GD_LCLS_NM</th>
+      <th>DL_GD_MCLS_NM</th>
+      <th>REC_SPG_INNB_1</th>
+      <th>REC_SPG_INNB_2</th>
+      <th>REC_SPG_INNB_3</th>
+      <th>REC_SPG_INNB_4</th>
+      <th>REC_SPG_INNB_5</th>
+      <th>REC_SPG_INNB_6</th>
+      <th>REC_SPG_INNB_7</th>
+      <th>REC_SPG_INNB_8</th>
+      <th>REC_SPG_INNB_9</th>
+      <th>SEND_SPG_INNB_10</th>
+      <th>REC_SPG_INNB_10</th>
+      <th>REC_SPG_INNB_11</th>
+      <th>REC_SPG_INNB_12</th>
+      <th>REC_SPG_INNB_13</th>
+      <th>REC_SPG_INNB_14</th>
+      <th>REC_SPG_INNB_15</th>
+      <th>REC_SPG_INNB_16</th>
+      <th>SEND_SPG_INNB_1~5</th>
+      <th>SEND_SPG_INNB_6~9</th>
+      <th>SEND_SPG_INNB_11~16</th>
+    </tr>
+    <tr>
+      <th>index</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>32000</th>
+      <td>식품</td>
+      <td>농산물</td>
+      <td>1</td>
+      <td>1</td>
+      <td>6</td>
+      <td>5</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>2</td>
+      <td>3</td>
+      <td>1</td>
+      <td>0</td>
+      <td>9</td>
+      <td>7</td>
+      <td>2</td>
+      <td>0</td>
+      <td>0</td>
+      <td>9</td>
+      <td>4</td>
+      <td>14</td>
+    </tr>
+    <tr>
+      <th>32001</th>
+      <td>식품</td>
+      <td>농산물</td>
+      <td>1</td>
+      <td>1</td>
+      <td>5</td>
+      <td>4</td>
+      <td>5</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>4</td>
+      <td>2</td>
+      <td>0</td>
+      <td>6</td>
+      <td>6</td>
+      <td>4</td>
+      <td>0</td>
+      <td>0</td>
+      <td>9</td>
+      <td>4</td>
+      <td>8</td>
+    </tr>
+    <tr>
+      <th>32002</th>
+      <td>식품</td>
+      <td>농산물</td>
+      <td>4</td>
+      <td>1</td>
+      <td>3</td>
+      <td>9</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>5</td>
+      <td>2</td>
+      <td>0</td>
+      <td>1</td>
+      <td>3</td>
+      <td>2</td>
+      <td>0</td>
+      <td>0</td>
+      <td>9</td>
+      <td>2</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>32003</th>
+      <td>식품</td>
+      <td>농산물</td>
+      <td>4</td>
+      <td>2</td>
+      <td>2</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>4</td>
+      <td>5</td>
+      <td>0</td>
+      <td>0</td>
+      <td>9</td>
+      <td>3</td>
+      <td>4</td>
+      <td>0</td>
+      <td>0</td>
+      <td>9</td>
+      <td>2</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>32004</th>
+      <td>식품</td>
+      <td>농산물</td>
+      <td>2</td>
+      <td>7</td>
+      <td>2</td>
+      <td>6</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>8</td>
+      <td>4</td>
+      <td>0</td>
+      <td>1</td>
+      <td>7</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>9</td>
+      <td>8</td>
+      <td>6</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+      <button class="colab-df-convert" onclick="convertToInteractive('df-73328244-199a-45d7-af03-0b9dcadb8dc7')" title="Convert this dataframe to an interactive table." style="display:none;">
+        
+  &lt;svg xmlns="http://www.w3.org/2000/svg" height="24px"viewBox="0 0 24 24"
+       width="24px"&gt;
+    <path d="M0 0h24v24H0V0z" fill="none"></path>
+    <path d="M18.56 5.44l.94 2.06.94-2.06 2.06-.94-2.06-.94-.94-2.06-.94 2.06-2.06.94zm-11 1L8.5 8.5l.94-2.06 2.06-.94-2.06-.94L8.5 2.5l-.94 2.06-2.06.94zm10 10l.94 2.06.94-2.06 2.06-.94-2.06-.94-.94-2.06-.94 2.06-2.06.94z"></path><path d="M17.41 7.96l-1.37-1.37c-.4-.4-.92-.59-1.43-.59-.52 0-1.04.2-1.43.59L10.3 9.45l-7.72 7.72c-.78.78-.78 2.05 0 2.83L4 21.41c.39.39.9.59 1.41.59.51 0 1.02-.2 1.41-.59l7.78-7.78 2.81-2.81c.8-.78.8-2.07 0-2.86zM5.41 20L4 18.59l7.72-7.72 1.47 1.35L5.41 20z"></path>
+  &lt;/svg&gt;
+      </button>
+      
+  <style>
+    .colab-df-container {
+      display:flex;
+      flex-wrap:wrap;
+      gap: 12px;
+    }
+
+    .colab-df-convert {
+      background-color: #E8F0FE;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      display: none;
+      fill: #1967D2;
+      height: 32px;
+      padding: 0 0 0 0;
+      width: 32px;
+    }
+
+    .colab-df-convert:hover {
+      background-color: #E2EBFA;
+      box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);
+      fill: #174EA6;
+    }
+
+    [theme=dark] .colab-df-convert {
+      background-color: #3B4455;
+      fill: #D2E3FC;
+    }
+
+    [theme=dark] .colab-df-convert:hover {
+      background-color: #434B5C;
+      box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+      filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));
+      fill: #FFFFFF;
+    }
+  </style>
+
+      <script>
+        const buttonEl =
+          document.querySelector('#df-73328244-199a-45d7-af03-0b9dcadb8dc7 button.colab-df-convert');
+        buttonEl.style.display =
+          google.colab.kernel.accessAllowed ? 'block' : 'none';
+
+        async function convertToInteractive(key) {
+          const element = document.querySelector('#df-73328244-199a-45d7-af03-0b9dcadb8dc7');
+          const dataTable =
+            await google.colab.kernel.invokeFunction('convertToInteractive',
+                                                     [key], {});
+          if (!dataTable) return;
+
+          const docLinkHtml = 'Like what you see? Visit the ' +
+            '<a target="_blank" href=https://colab.research.google.com/notebooks/data_table.ipynb>data table notebook</a>'
+            + ' to learn more about interactive tables.';
+          element.innerHTML = '';
+          dataTable['output_type'] = 'display_data';
+          await google.colab.output.renderOutput(dataTable, element);
+          const docLink = document.createElement('div');
+          docLink.innerHTML = docLinkHtml;
+          element.appendChild(docLink);
+        }
+      </script>
+    </div>
+  </div>
+  
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="n">train</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>&lt;class 'pandas.core.frame.DataFrame'&gt;
+Int64Index: 32000 entries, 0 to 31999
+Data columns (total 23 columns):
+ #   Column               Non-Null Count  Dtype   
+---  ------               --------------  -----   
+ 0   DL_GD_LCLS_NM        32000 non-null  category
+ 1   DL_GD_MCLS_NM        32000 non-null  category
+ 2   INVC_CONT            32000 non-null  int64   
+ 3   REC_SPG_INNB_1       32000 non-null  category
+ 4   REC_SPG_INNB_2       32000 non-null  category
+ 5   REC_SPG_INNB_3       32000 non-null  category
+ 6   REC_SPG_INNB_4       32000 non-null  category
+ 7   REC_SPG_INNB_5       32000 non-null  category
+ 8   REC_SPG_INNB_6       32000 non-null  category
+ 9   REC_SPG_INNB_7       32000 non-null  category
+ 10  REC_SPG_INNB_8       32000 non-null  category
+ 11  REC_SPG_INNB_9       32000 non-null  category
+ 12  SEND_SPG_INNB_10     32000 non-null  category
+ 13  REC_SPG_INNB_10      32000 non-null  category
+ 14  REC_SPG_INNB_11      32000 non-null  category
+ 15  REC_SPG_INNB_12      32000 non-null  category
+ 16  REC_SPG_INNB_13      32000 non-null  category
+ 17  REC_SPG_INNB_14      32000 non-null  category
+ 18  REC_SPG_INNB_15      32000 non-null  category
+ 19  REC_SPG_INNB_16      32000 non-null  category
+ 20  SEND_SPG_INNB_1~5    32000 non-null  category
+ 21  SEND_SPG_INNB_6~9    32000 non-null  category
+ 22  SEND_SPG_INNB_11~16  32000 non-null  category
+dtypes: category(22), int64(1)
+memory usage: 1.2 MB
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="3.모델링">
+<a class="anchor" href="#3.%EB%AA%A8%EB%8D%B8%EB%A7%81" aria-hidden="true"><span class="octicon octicon-link"></span></a>3.모델링<a class="anchor-link" href="#3.%EB%AA%A8%EB%8D%B8%EB%A7%81"> </a>
+</h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Optuna로 Random Search를 통해 Catboost 최적의 파라미터를 사용하였습니다. objective 함수의 param에 파라미터를 넣고, 구간을 넣으면 랜덤한 값으로 학습되며 rmse값이 반환되는 함수입니다. "trial"에 반복 횟수를 작성하면 됩니다.</p>
+<p>Catboost 특성상 학습이 오래 걸리기 때문에 최적의 파라미터를 찾아 cat_param로 정의하였습니다.</p>
+<p>(아래코드는 AIBoo님의 신용카드 사용자 연체 예측 AI 경진대회 [Private 8위 0.66203] | TYKIM | Catboost 코드를 참고하여 수정하였습니다.)</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="c1">#   param = {</span>
+<span class="c1">#       "random_state":42,</span>
+<span class="c1">#       'learning_rate' : trial.suggest_loguniform('learning_rate', 0.01, 0.05),</span>
+<span class="c1">#       'bagging_temperature' :trial.suggest_loguniform('bagging_temperature', 0.01, 100.00),</span>
+<span class="c1">#       "n_estimators":trial.suggest_int("n_estimators", 500, 5000),</span>
+<span class="c1">#       "max_depth":trial.suggest_int("max_depth", 4, 16),</span>
+<span class="c1">#       'random_strength' :trial.suggest_int('random_strength', 0, 100),</span>
+<span class="c1">#       "colsample_bylevel":trial.suggest_float("colsample_bylevel", 0.4, 1.0),</span>
+<span class="c1">#       "l2_leaf_reg":trial.suggest_float("l2_leaf_reg",1e-8,3e-5),</span>
+<span class="c1">#       "min_child_samples": trial.suggest_int("min_child_samples", 5, 100),</span>
+<span class="c1">#       "max_bin": trial.suggest_int("max_bin", 200, 500),</span>
+<span class="c1">#       'od_type': trial.suggest_categorical('od_type', ['IncToDec', 'Iter']),</span>
+<span class="c1">#   }</span>
+<span class="c1">#   X_train, X_valid, y_train, y_valid = train_test_split(X,y,test_size=0.2)</span>
+<span class="c1">#   cat_features = range(X_test.shape[1])</span>
+<span class="c1">#   cat = CatBoostRegressor(**param)</span>
+<span class="c1">#   cat.fit(X_train, y_train,</span>
+<span class="c1">#           eval_set=[(X_train, y_train), (X_valid,y_valid)],</span>
+<span class="c1">#           early_stopping_rounds=35,cat_features=cat_features,</span>
+<span class="c1">#           verbose=100)</span>
+<span class="c1">#   cat_pred = cat.predict(X_valid)</span>
+<span class="c1">#   rmse = np.sqrt(mean_squared_error(y_valid, cat_pred))</span>
+
+<span class="c1">#   return rmse</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="c1"># study = optuna.create_study(</span>
+<span class="c1">#     study_name = 'cat_parameter_opt',</span>
+<span class="c1">#     direction = 'minimize',</span>
+<span class="c1">#     sampler = sampler,</span>
+<span class="c1"># )</span>
+
+<span class="c1"># study.optimize(objective, n_trials=10)</span>
+<span class="c1"># print("Best Score:",study.best_value)</span>
+<span class="c1"># print("Best trial",study.best_trial.params)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="n">cat_param</span><span class="o">=</span><span class="p">{</span><span class="s1">'learning_rate'</span><span class="p">:</span> <span class="mf">0.018272261776066247</span><span class="p">,</span> 
+           <span class="s1">'bagging_temperature'</span><span class="p">:</span> <span class="mf">63.512210106407046</span><span class="p">,</span> 
+           <span class="s1">'n_estimators'</span><span class="p">:</span> <span class="mi">3794</span><span class="p">,</span> 
+           <span class="s1">'max_depth'</span><span class="p">:</span> <span class="mi">11</span><span class="p">,</span> 
+           <span class="s1">'random_strength'</span><span class="p">:</span> <span class="mi">15</span><span class="p">,</span> 
+           <span class="s1">'colsample_bylevel'</span><span class="p">:</span> <span class="mf">0.49359671220172163</span><span class="p">,</span> 
+           <span class="s1">'l2_leaf_reg'</span><span class="p">:</span> <span class="mf">1.7519275289243016e-06</span><span class="p">,</span> 
+           <span class="s1">'min_child_samples'</span><span class="p">:</span> <span class="mi">88</span><span class="p">,</span> 
+           <span class="s1">'max_bin'</span><span class="p">:</span> <span class="mi">380</span><span class="p">,</span> 
+           <span class="s1">'od_type'</span><span class="p">:</span> <span class="s1">'IncToDec'</span>
+           <span class="p">}</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="n">skf</span> <span class="o">=</span> <span class="n">StratifiedKFold</span><span class="p">(</span><span class="n">n_splits</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">folds</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">train_idx</span><span class="p">,</span> <span class="n">valid_idx</span> <span class="ow">in</span> <span class="n">skf</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">train</span><span class="p">,</span> <span class="n">train</span><span class="p">[</span><span class="s1">'INVC_CONT'</span><span class="p">]):</span>
+  <span class="n">folds</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">train_idx</span><span class="p">,</span><span class="n">valid_idx</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>/usr/local/lib/python3.7/dist-packages/sklearn/model_selection/_split.py:680: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=10.
+  UserWarning,
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>train 데이터를 K-Fold 하여 각 Fold의 학습 값을 가지고 test 예측값을 구한 후 평균을 구하였습니다.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="n">skf</span> <span class="o">=</span> <span class="n">StratifiedKFold</span><span class="p">(</span><span class="n">n_splits</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">folds</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">train_idx</span><span class="p">,</span> <span class="n">valid_idx</span> <span class="ow">in</span> <span class="n">skf</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">train</span><span class="p">,</span> <span class="n">train</span><span class="p">[</span><span class="s1">'INVC_CONT'</span><span class="p">]):</span>
+  <span class="n">folds</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">train_idx</span><span class="p">,</span><span class="n">valid_idx</span><span class="p">))</span>
+
+<span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">cat_models</span><span class="o">=</span><span class="p">{}</span>
+
+<span class="n">cat_features</span> <span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="n">X_test</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+
+<span class="k">for</span> <span class="n">fold</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+  <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'====================================</span><span class="si">{</span><span class="n">fold</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s1">============================================'</span><span class="p">)</span>
+  <span class="n">train_idx</span><span class="p">,</span> <span class="n">valid_idx</span> <span class="o">=</span> <span class="n">folds</span><span class="p">[</span><span class="n">fold</span><span class="p">]</span>
+  <span class="n">X_train</span> <span class="o">=</span> <span class="n">train</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s1">'INVC_CONT'</span><span class="p">],</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">train_idx</span><span class="p">]</span>
+  <span class="n">X_valid</span> <span class="o">=</span> <span class="n">train</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s1">'INVC_CONT'</span><span class="p">],</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">valid_idx</span><span class="p">]</span>
+  <span class="n">y_train</span> <span class="o">=</span> <span class="n">train</span><span class="p">[</span><span class="s1">'INVC_CONT'</span><span class="p">][</span><span class="n">train_idx</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+  <span class="n">y_valid</span> <span class="o">=</span> <span class="n">train</span><span class="p">[</span><span class="s1">'INVC_CONT'</span><span class="p">][</span><span class="n">valid_idx</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+
+  <span class="n">cat</span> <span class="o">=</span> <span class="n">CatBoostRegressor</span><span class="p">(</span><span class="o">**</span><span class="n">cat_param</span><span class="p">)</span>
+  <span class="n">cat</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span>
+          <span class="n">eval_set</span><span class="o">=</span><span class="p">[(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">),</span> <span class="p">(</span><span class="n">X_valid</span><span class="p">,</span><span class="n">y_valid</span><span class="p">)],</span>
+          <span class="n">early_stopping_rounds</span><span class="o">=</span><span class="mi">35</span><span class="p">,</span><span class="n">cat_features</span><span class="o">=</span><span class="n">cat_features</span><span class="p">,</span>
+          <span class="n">verbose</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+  <span class="n">cat_models</span><span class="p">[</span><span class="n">fold</span><span class="p">]</span> <span class="o">=</span> <span class="n">cat</span>
+  <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'================================================================================</span><span class="se">\n\n</span><span class="s1">'</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>====================================1============================================
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>/usr/local/lib/python3.7/dist-packages/sklearn/model_selection/_split.py:680: UserWarning: The least populated class in y has only 1 members, which is less than n_splits=10.
+  UserWarning,
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>0:	learn: 5.6240726	test: 5.6244095	test1: 6.7835557	best: 6.7835557 (0)	total: 498ms	remaining: 31m 30s
+100:	learn: 5.4960942	test: 5.5301616	test1: 6.6675145	best: 6.6675145 (100)	total: 24.7s	remaining: 15m 2s
+200:	learn: 5.4405946	test: 5.4798163	test1: 6.6059558	best: 6.6059558 (198)	total: 36.2s	remaining: 10m 47s
+300:	learn: 5.4140537	test: 5.4605846	test1: 6.5849293	best: 6.5849293 (300)	total: 47.3s	remaining: 9m 9s
+400:	learn: 5.3916725	test: 5.4422328	test1: 6.5653535	best: 6.5653535 (400)	total: 57.7s	remaining: 8m 7s
+500:	learn: 5.3395210	test: 5.3956074	test1: 6.5185137	best: 6.5185137 (500)	total: 1m 8s	remaining: 7m 30s
+600:	learn: 5.2901206	test: 5.3652920	test1: 6.4707527	best: 6.4707527 (600)	total: 1m 19s	remaining: 7m 4s
+700:	learn: 5.0282278	test: 5.2082914	test1: 6.2761017	best: 6.2761017 (700)	total: 1m 40s	remaining: 7m 23s
+800:	learn: 4.7363885	test: 5.0484783	test1: 6.1402382	best: 6.1401487 (798)	total: 2m 11s	remaining: 8m 11s
+900:	learn: 4.5672517	test: 4.9696530	test1: 6.0793294	best: 6.0788567 (881)	total: 2m 42s	remaining: 8m 41s
+1000:	learn: 4.4406792	test: 4.9196033	test1: 6.0718066	best: 6.0716713 (990)	total: 3m 12s	remaining: 8m 58s
+Stopped by overfitting detector  (35 iterations wait)
+
+bestTest = 6.068832186
+bestIteration = 1044
+
+Shrink model to first 1045 iterations.
+================================================================================
+
+
+====================================2============================================
+0:	learn: 5.7998015	test: 5.7997917	test1: 5.2928846	best: 5.2928846 (0)	total: 65.4ms	remaining: 4m 8s
+100:	learn: 5.6398961	test: 5.7026359	test1: 5.2344849	best: 5.2344849 (100)	total: 13.9s	remaining: 8m 26s
+200:	learn: 5.5727985	test: 5.6661956	test1: 5.2212126	best: 5.2212126 (200)	total: 24.1s	remaining: 7m 10s
+300:	learn: 5.4880491	test: 5.6112859	test1: 5.2099747	best: 5.2099747 (300)	total: 36.2s	remaining: 6m 59s
+400:	learn: 5.4288432	test: 5.5728402	test1: 5.2043505	best: 5.2043505 (400)	total: 47.2s	remaining: 6m 39s
+500:	learn: 5.3730200	test: 5.5308387	test1: 5.1973897	best: 5.1973897 (500)	total: 57.8s	remaining: 6m 19s
+600:	learn: 5.2682635	test: 5.4467884	test1: 5.1827241	best: 5.1823130 (598)	total: 1m 11s	remaining: 6m 17s
+700:	learn: 5.0329989	test: 5.2904110	test1: 5.1763991	best: 5.1754082 (686)	total: 1m 40s	remaining: 7m 25s
+800:	learn: 4.7760561	test: 5.1586431	test1: 5.1691799	best: 5.1689916 (799)	total: 2m 17s	remaining: 8m 35s
+900:	learn: 4.5718300	test: 5.0578540	test1: 5.1657950	best: 5.1656201 (881)	total: 2m 48s	remaining: 9m
+Stopped by overfitting detector  (35 iterations wait)
+
+bestTest = 5.163419657
+bestIteration = 958
+
+Shrink model to first 959 iterations.
+================================================================================
+
+
+====================================3============================================
+0:	learn: 5.7954233	test: 5.7954087	test1: 5.3358658	best: 5.3358658 (0)	total: 61ms	remaining: 3m 51s
+100:	learn: 5.6510996	test: 5.6987296	test1: 5.2296969	best: 5.2296969 (100)	total: 11.8s	remaining: 7m 12s
+200:	learn: 5.5891938	test: 5.6632554	test1: 5.1978101	best: 5.1978101 (200)	total: 25.6s	remaining: 7m 36s
+300:	learn: 5.5205015	test: 5.6164968	test1: 5.1640026	best: 5.1639988 (294)	total: 38.8s	remaining: 7m 30s
+400:	learn: 5.4715385	test: 5.5996822	test1: 5.1517844	best: 5.1517844 (400)	total: 51.3s	remaining: 7m 14s
+500:	learn: 5.4126707	test: 5.5432101	test1: 5.1051460	best: 5.1051388 (499)	total: 1m 1s	remaining: 6m 42s
+600:	learn: 5.3683705	test: 5.5178964	test1: 5.0840610	best: 5.0840609 (599)	total: 1m 11s	remaining: 6m 20s
+700:	learn: 5.1067467	test: 5.3031105	test1: 4.9499417	best: 4.9499417 (700)	total: 1m 33s	remaining: 6m 51s
+800:	learn: 4.8336476	test: 5.1569749	test1: 4.8936226	best: 4.8936226 (800)	total: 2m 3s	remaining: 7m 40s
+900:	learn: 4.6463427	test: 5.0731393	test1: 4.8750691	best: 4.8749592 (899)	total: 2m 33s	remaining: 8m 14s
+1000:	learn: 4.4988646	test: 5.0119748	test1: 4.8621792	best: 4.8619472 (998)	total: 3m 4s	remaining: 8m 34s
+Stopped by overfitting detector  (35 iterations wait)
+
+bestTest = 4.857927859
+bestIteration = 1045
+
+Shrink model to first 1046 iterations.
+================================================================================
+
+
+====================================4============================================
+0:	learn: 5.6797253	test: 5.6797053	test1: 6.3581339	best: 6.3581339 (0)	total: 61.3ms	remaining: 3m 52s
+100:	learn: 5.5764211	test: 5.5851445	test1: 6.2563079	best: 6.2563079 (100)	total: 12.6s	remaining: 7m 42s
+200:	learn: 5.5165005	test: 5.5369824	test1: 6.1989641	best: 6.1989641 (200)	total: 25.9s	remaining: 7m 42s
+300:	learn: 5.4783855	test: 5.4982155	test1: 6.1413561	best: 6.1413522 (295)	total: 36.6s	remaining: 7m 4s
+400:	learn: 5.4373504	test: 5.4615927	test1: 6.0793381	best: 6.0793381 (400)	total: 45.6s	remaining: 6m 25s
+500:	learn: 5.3895524	test: 5.4217469	test1: 6.0430049	best: 6.0429846 (497)	total: 58.1s	remaining: 6m 21s
+600:	learn: 5.3229585	test: 5.3672285	test1: 5.9601014	best: 5.9601014 (600)	total: 1m 12s	remaining: 6m 26s
+700:	learn: 5.0641650	test: 5.1685397	test1: 5.6283284	best: 5.6282761 (699)	total: 1m 34s	remaining: 6m 56s
+800:	learn: 4.8122561	test: 5.0117926	test1: 5.4345803	best: 5.4345803 (800)	total: 2m 4s	remaining: 7m 44s
+900:	learn: 4.5865353	test: 4.9277124	test1: 5.3770698	best: 5.3770698 (900)	total: 2m 34s	remaining: 8m 16s
+Stopped by overfitting detector  (35 iterations wait)
+
+bestTest = 5.367815232
+bestIteration = 948
+
+Shrink model to first 949 iterations.
+================================================================================
+
+
+====================================5============================================
+0:	learn: 5.8127429	test: 5.8127445	test1: 5.1631856	best: 5.1631856 (0)	total: 59.8ms	remaining: 3m 46s
+100:	learn: 5.7174157	test: 5.7421257	test1: 5.1135334	best: 5.1135334 (100)	total: 12.1s	remaining: 7m 21s
+200:	learn: 5.6513823	test: 5.6897737	test1: 5.0990861	best: 5.0990861 (200)	total: 23.2s	remaining: 6m 54s
+300:	learn: 5.5762771	test: 5.6375500	test1: 5.0975761	best: 5.0945176 (267)	total: 34.8s	remaining: 6m 43s
+Stopped by overfitting detector  (35 iterations wait)
+
+bestTest = 5.094517591
+bestIteration = 267
+
+Shrink model to first 268 iterations.
+================================================================================
+
+
+====================================6============================================
+0:	learn: 5.8718289	test: 5.8718225	test1: 4.5217283	best: 4.5217283 (0)	total: 63.6ms	remaining: 4m 1s
+100:	learn: 5.7675896	test: 5.7717752	test1: 4.4536227	best: 4.4536227 (100)	total: 12.4s	remaining: 7m 33s
+200:	learn: 5.7072065	test: 5.7210221	test1: 4.4333057	best: 4.4333057 (200)	total: 24.5s	remaining: 7m 18s
+300:	learn: 5.6531517	test: 5.6372884	test1: 4.4228929	best: 4.4228700 (299)	total: 36.1s	remaining: 6m 59s
+400:	learn: 5.5785283	test: 5.5630332	test1: 4.4138547	best: 4.4138547 (400)	total: 48.7s	remaining: 6m 52s
+500:	learn: 5.5368764	test: 5.5235730	test1: 4.4087818	best: 4.4087818 (500)	total: 1m	remaining: 6m 39s
+600:	learn: 5.4462576	test: 5.4463752	test1: 4.4044104	best: 4.4044104 (600)	total: 1m 14s	remaining: 6m 35s
+700:	learn: 5.1627216	test: 5.2381077	test1: 4.3989134	best: 4.3981901 (695)	total: 1m 33s	remaining: 6m 50s
+800:	learn: 4.8764121	test: 5.1291066	test1: 4.3813348	best: 4.3810835 (798)	total: 2m 2s	remaining: 7m 39s
+Stopped by overfitting detector  (35 iterations wait)
+
+bestTest = 4.375711979
+bestIteration = 855
+
+Shrink model to first 856 iterations.
+================================================================================
+
+
+====================================7============================================
+0:	learn: 5.5896379	test: 5.5896739	test1: 7.0398490	best: 7.0398490 (0)	total: 62.8ms	remaining: 3m 58s
+100:	learn: 5.4895956	test: 5.5207092	test1: 6.9712621	best: 6.9712621 (100)	total: 11.6s	remaining: 7m 2s
+200:	learn: 5.4368356	test: 5.4905300	test1: 6.9470753	best: 6.9470753 (200)	total: 22.4s	remaining: 6m 41s
+300:	learn: 5.4108806	test: 5.4764698	test1: 6.9373469	best: 6.9373353 (298)	total: 32.4s	remaining: 6m 16s
+400:	learn: 5.3796268	test: 5.4556132	test1: 6.8839617	best: 6.8839617 (400)	total: 43.7s	remaining: 6m 9s
+500:	learn: 5.3317076	test: 5.4298767	test1: 6.8320513	best: 6.8320250 (497)	total: 55.8s	remaining: 6m 6s
+600:	learn: 5.2595996	test: 5.3902005	test1: 6.7159785	best: 6.7159785 (600)	total: 1m 10s	remaining: 6m 12s
+700:	learn: 5.1266059	test: 5.3415476	test1: 6.6241471	best: 6.6238443 (696)	total: 1m 30s	remaining: 6m 38s
+800:	learn: 4.8878021	test: 5.2295321	test1: 6.3647524	best: 6.3647524 (800)	total: 2m	remaining: 7m 30s
+900:	learn: 4.6774448	test: 5.1363369	test1: 6.2224111	best: 6.2201793 (898)	total: 2m 30s	remaining: 8m 4s
+1000:	learn: 4.5147885	test: 5.0836647	test1: 6.1634589	best: 6.1634589 (1000)	total: 3m 1s	remaining: 8m 25s
+1100:	learn: 4.3961307	test: 5.0453149	test1: 6.1036841	best: 6.1036841 (1100)	total: 3m 31s	remaining: 8m 38s
+1200:	learn: 4.2735652	test: 5.0100648	test1: 6.0608318	best: 6.0608318 (1200)	total: 4m 2s	remaining: 8m 43s
+1300:	learn: 4.1715964	test: 4.9854930	test1: 6.0428858	best: 6.0428858 (1300)	total: 4m 32s	remaining: 8m 42s
+1400:	learn: 4.0832148	test: 4.9626169	test1: 6.0374177	best: 6.0363832 (1389)	total: 5m 3s	remaining: 8m 38s
+Stopped by overfitting detector  (35 iterations wait)
+
+bestTest = 6.036383207
+bestIteration = 1389
+
+Shrink model to first 1390 iterations.
+================================================================================
+
+
+====================================8============================================
+0:	learn: 5.7761549	test: 5.7761372	test1: 5.5206589	best: 5.5206589 (0)	total: 60.1ms	remaining: 3m 48s
+100:	learn: 5.6259120	test: 5.6818344	test1: 5.4627034	best: 5.4627034 (100)	total: 12.7s	remaining: 7m 45s
+200:	learn: 5.5214357	test: 5.6009615	test1: 5.4442310	best: 5.4442310 (200)	total: 24.1s	remaining: 7m 10s
+300:	learn: 5.4240376	test: 5.4945688	test1: 5.4326722	best: 5.4326722 (299)	total: 35.9s	remaining: 6m 56s
+400:	learn: 5.3796432	test: 5.4740359	test1: 5.4293208	best: 5.4293208 (400)	total: 45.8s	remaining: 6m 27s
+500:	learn: 5.3351087	test: 5.4464290	test1: 5.4225107	best: 5.4225107 (500)	total: 57.3s	remaining: 6m 16s
+Stopped by overfitting detector  (35 iterations wait)
+
+bestTest = 5.42192434
+bestIteration = 518
+
+Shrink model to first 519 iterations.
+================================================================================
+
+
+====================================9============================================
+0:	learn: 5.8113326	test: 5.8113592	test1: 5.1774233	best: 5.1774233 (0)	total: 66.7ms	remaining: 4m 12s
+100:	learn: 5.6893174	test: 5.7115796	test1: 5.0706084	best: 5.0706084 (100)	total: 13.9s	remaining: 8m 28s
+200:	learn: 5.6380443	test: 5.6733641	test1: 5.0465860	best: 5.0465860 (200)	total: 23s	remaining: 6m 51s
+300:	learn: 5.5796243	test: 5.6231843	test1: 5.0204694	best: 5.0201020 (293)	total: 33.9s	remaining: 6m 33s
+400:	learn: 5.5339410	test: 5.6036245	test1: 5.0077692	best: 5.0077644 (399)	total: 45.4s	remaining: 6m 24s
+500:	learn: 5.4983008	test: 5.5786004	test1: 4.9919552	best: 4.9919552 (500)	total: 58.6s	remaining: 6m 25s
+600:	learn: 5.4141082	test: 5.5007961	test1: 4.9789318	best: 4.9789318 (600)	total: 1m 12s	remaining: 6m 24s
+700:	learn: 5.1832211	test: 5.3333448	test1: 4.9449670	best: 4.9445323 (696)	total: 1m 34s	remaining: 6m 57s
+800:	learn: 4.9239177	test: 5.1933113	test1: 4.9167434	best: 4.9167405 (799)	total: 2m 3s	remaining: 7m 42s
+900:	learn: 4.7601542	test: 5.1326880	test1: 4.9092309	best: 4.9091543 (899)	total: 2m 34s	remaining: 8m 15s
+1000:	learn: 4.6155194	test: 5.0813784	test1: 4.9029460	best: 4.9019464 (991)	total: 3m 4s	remaining: 8m 35s
+Stopped by overfitting detector  (35 iterations wait)
+
+bestTest = 4.899096889
+bestIteration = 1043
+
+Shrink model to first 1044 iterations.
+================================================================================
+
+
+====================================10============================================
+0:	learn: 5.7433502	test: 5.7433425	test1: 5.8209412	best: 5.8209412 (0)	total: 60ms	remaining: 3m 47s
+100:	learn: 5.5948456	test: 5.6177444	test1: 5.7560805	best: 5.7560805 (100)	total: 12.4s	remaining: 7m 33s
+200:	learn: 5.5226384	test: 5.5328046	test1: 5.7386751	best: 5.7386742 (199)	total: 23.8s	remaining: 7m 5s
+300:	learn: 5.4668698	test: 5.4790270	test1: 5.7304271	best: 5.7304151 (299)	total: 34.9s	remaining: 6m 44s
+400:	learn: 5.4168370	test: 5.4306267	test1: 5.7260604	best: 5.7253147 (390)	total: 45.9s	remaining: 6m 28s
+Stopped by overfitting detector  (35 iterations wait)
+
+bestTest = 5.725314711
+bestIteration = 390
+
+Shrink model to first 391 iterations.
+================================================================================
+
+
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="n">submission</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s1">'INVC_CONT'</span><span class="p">]</span><span class="o">=</span><span class="mi">0</span>
+<span class="k">for</span> <span class="n">fold</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+  <span class="n">submission</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s1">'INVC_CONT'</span><span class="p">]</span> <span class="o">+=</span> <span class="n">cat_models</span><span class="p">[</span><span class="n">fold</span><span class="p">]</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">test</span><span class="p">)</span><span class="o">/</span><span class="mi">10</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>train을 K-fold한 값의 평균을 구하다 보니 예측값의 극단값이 작아질 수 밖에 없습니다.</p>
+<p>따라서 INVC_CONT가 30 이상인 값에 적당한 값을 곱하여서 조정하였습니다.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="n">submission</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">submission</span><span class="o">.</span><span class="n">INVC_CONT</span><span class="o">&gt;</span><span class="mi">30</span><span class="p">,</span><span class="s1">'INVC_CONT'</span><span class="p">]</span><span class="o">=</span><span class="n">submission</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">submission</span><span class="o">.</span><span class="n">INVC_CONT</span><span class="o">&gt;</span><span class="mi">30</span><span class="p">,</span><span class="s1">'INVC_CONT'</span><span class="p">]</span><span class="o">*</span><span class="mf">4.8</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+</div>
+
+
+
+  </div><a class="u-url" href="/shw9807blog/%EB%8D%B0%EC%9D%B4%EC%BD%98/2022/02/03/%EB%AC%BC%EB%A5%98%EC%9C%A0%ED%86%B5%EB%9F%89_%EC%98%88%EC%B8%A1.html" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/shw9807blog/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/shw9807blog/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/shw9807blog/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>An easy to use blogging platform with support for Jupyter Notebooks.</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/https%3A%2F%2Fshw9807.github.io" target="_blank" title="https://shw9807.github.io"><svg class="svg-icon grey"><use xlink:href="/shw9807blog/assets/minima-social-icons.svg#github"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
